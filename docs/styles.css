@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #FAF9F6;
-    color: white;
+    color: black;
     
     /* Center the canvas both horizontally and vertically */
     display: flex;

@@ -86,6 +86,7 @@ const click_page = p => {
 	if (click_test(i_left, p)) {
 		set_state("root", "left", true);
 		draw_page();
+		location.replace('./left/' );
 	} else if (click_test(i_right, p)) {
 		set_state("root", "right", true);
 		draw_page();

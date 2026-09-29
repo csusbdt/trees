@@ -142,6 +142,10 @@ const canvas_coords = e => {
 	};
 };
 
+window.clear_canvas = _ => {
+	ctx.fillStyle = window.getComputedStyle(document.body).backgroundColor;;	
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+};
 
 ///////////////////////////////////////////////////////////////////////////////////
 //
@@ -192,6 +196,38 @@ window.bg_white = new c_bg(rgb_white);
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+const timeout_ids = [];
+
+window.set_timeout = function(f, t) {
+	const id = setTimeout(f, t);
+	timeout_ids.push(id);
+	return id;
+}
+
+window.clear_timeout = function(id) {
+	const i = timeout_ids.indexOf(id);
+	if (i !== -1) {
+		clearTimeout(id);
+		timeout_ids.splice(i, 1);		
+	}
+}
+
+const interval_ids = [];
+
+window.set_interval = function(f, t) {
+	const id = setInterval(f, t);
+	interval_ids.push(id);
+	return id;
+}
+
+window.clear_interval = function(id) {
+	const i = interval_ids.indexOf(id);
+	if (i !== -1) {
+		clearInterval(id);
+		interval_ids.splice(i, 1);		
+	}
+}
+
 /*
 window.PHI = 1.61803398875;
 
@@ -230,29 +266,29 @@ window.draw = (image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
 	}
 };
 
-window.click = (o, x = 0, y = 0) => {
-	if (o === null) return;
-	if (Array.isArray(o)) {
-		for (const i in o) {
-			if (o[i].click(x, y)) return true;
-		}
-		return false;
-	} else return o.click(x, y);
-};
+// window.click = (o, x = 0, y = 0) => {
+// 	if (o === null) return;
+// 	if (Array.isArray(o)) {
+// 		for (const i in o) {
+// 			if (o[i].click(x, y)) return true;
+// 		}
+// 		return false;
+// 	} else return o.click(x, y);
+// };
 
-window.start = (o, x = 0, y = 0) => {
-	if (o === null) return;
-	if (Array.isArray(o)) {
-		for (const i in o) o[i].start(x, y);
-	} else o.start(x, y);
-};
+// window.start = (o, x = 0, y = 0) => {
+// 	if (o === null) return;
+// 	if (Array.isArray(o)) {
+// 		for (const i in o) o[i].start(x, y);
+// 	} else o.start(x, y);
+// };
 
-window.stop = (o, x = 0, y = 0) => {
-	if (o === null) return;
-	if (Array.isArray(o)) {
-		for (const i in o) o[i].stop(x, y);
-	} else o.stop(x, y);
-};
+// window.stop = (o, x = 0, y = 0) => {
+// 	if (o === null) return;
+// 	if (Array.isArray(o)) {
+// 		for (const i in o) o[i].stop(x, y);
+// 	} else o.stop(x, y);
+// };
 
 window.url = path => {
 	if (window.location.pathname.startsWith('/trees')) {
@@ -261,6 +297,12 @@ window.url = path => {
 		return path;
 	}
 };
+
+// window.go_up    = () => delay(.001).starts(() => location.replace('../'     )).start();
+// window.go_left  = () => {
+// 	delay(.001).starts(() => location.replace('./left/' )).start();
+// };
+// window.go_right = () => delay(.001).starts(() => location.replace('./right/')).start();
 
 
 ///////////////////////////////////////////////////////////////////////////////
