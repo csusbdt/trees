@@ -108,7 +108,7 @@ window.init_audio = _ => {
 		main_gain.gain.value = 1;
 		main_gain.connect(compressor);
 		gain = audio.createGain();
-		gain.gain.value = get('volume', Math.pow(2, -5));
+		//gain.gain.value = get('volume', Math.pow(2, -5));
 		gain.connect(main_gain);
 	}
 };
@@ -121,8 +121,11 @@ window.init_audio = _ => {
 
 window.ctx = canvas.getContext('2d');
 
-const click_test_canvas = document.createElement('canvas');
-const click_test_ctx    = click_test_canvas.getContext("2d", { willReadFrequently: true });
+const click_test_canvas  = document.createElement('canvas');
+click_test_canvas.width  = canvas.width;
+click_test_canvas.height = canvas.height;
+
+const click_test_ctx     = click_test_canvas.getContext("2d", { willReadFrequently: true });
 
 // Convert mouse/touch event coords to game world coords.
 const canvas_coords = e => {
@@ -273,33 +276,19 @@ window.click_y   = null;
 canvas.addEventListener('click', e => {
     init_audio();
     if (on_click !== null) {
-		[click_x, click_y] = canvas_coords(e);
-		on_click();
+		on_click(canvas_coords(e));
 	}
 });
 
 // pixel-based click detection
-window.click_test = (images, x = 0, y = 0, s = 1) => {
+window.click_test = (images, p) => {
 	if (!Array.isArray(images)) images = [images];
-	for (let i = 0; i < images.length; ++i) {
-		if (!images[i].complete) return false;
-	}
     click_test_ctx.clearRect(0, 0, click_test_canvas.width, click_test_canvas.height);
-    const dx      = x            ;
-    const dy      = y            ;
-    const sx      = 0            ;
-    const sy      = 0            ;
 	for (let i = 0; i < images.length; ++i) {
-		const image   = images[i]      ;
-	    const sWidth  = image.width  ;
-	    const sHeight = image.height ;
-	    const dWidth  = sWidth * s   ;
-	    const dHeight = sHeight * s  ;
-		click_test_ctx.drawImage(image, sx, sy, sWidth, sHeight, dx/4, dy/4, dWidth/4, dHeight/4);		
+		click_test_ctx.drawImage(images[i], 0, 0);
 	}
-    const image_data = click_test_ctx.getImageData(0, 0, click_test_canvas.width, click_test_canvas.height);
-    let int_x = Math.floor(click_x / 4);
-    let int_y = Math.floor(click_y / 4);
-    const i = Math.floor((image_data.width * int_y + int_x) * 4);
-	return image_data.data[i] !== 0;
+	const int_x = Math.floor(p.x);
+    const int_y = Math.floor(p.y);
+	const pixel = click_test_ctx.getImageData(int_x, int_y, 1, 1).data;
+	return (pixel[0] + pixel[1] + pixel[2] != 0);
 };

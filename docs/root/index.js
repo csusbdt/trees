@@ -40,78 +40,71 @@ const bg_color = window.getComputedStyle(document.body).backgroundColor;
 // 	[ button_g_2, button_2, home, volume ]
 // ];
 
-const speed  = 220;
+//const speed  = 220;
 // let anim_i   = 0;
 // let photo_i  = 0;
 // let photo_id = null;
 
-const start = _ => {
-	// if (on_click !== null) {
-	// 	on_click = null;
-	// 	photo_i = 0;
-	// } else if (++anim_i === anim.length) {
-	// 	music();
-	// 	loop_photos();
-	// 	on_click = click_page;
-	// 	return;
-	// }
-	setTimeout(start, speed);
-};
-
-// const loop_photos = _ => {
-// 	if (photo_id !== null && ++photo_i === photos.length) {
-// 		photo_i = 0;
-// 		music();
-// 		music();
-// 	}
-// 	photo_id = setTimeout(loop_photos, 16000);
-//     on_resize();
+// const start = _ => {
+// 	// if (on_click !== null) {
+// 	// 	on_click = null;
+// 	// 	photo_i = 0;
+// 	// } else if (++anim_i === anim.length) {
+// 	// 	music();
+// 	// 	loop_photos();
+// 	// 	on_click = click_page;
+// 	// 	return;
+// 	// }
+// 	setTimeout(start, speed);
 // };
 
-const stop = _ => {
-	// if (anim_i === anim.length) {
-	// 	on_click = null;
-	// 	clearTimeout(photo_id);
-	// 	photo_id = null;
-	// }	
-	// if (--anim_i === 0) {
-	// 	music();
-	// 	on_click = click_page;
-	// } else {
-	// 	setTimeout(stop, speed);
-	// }
-};
+// // const loop_photos = _ => {
+// // 	if (photo_id !== null && ++photo_i === photos.length) {
+// // 		photo_i = 0;
+// // 		music();
+// // 		music();
+// // 	}
+// // 	photo_id = setTimeout(loop_photos, 16000);
+// //     on_resize();
+// // };
 
-const click_page = _ => {
-	// if (anim_i === 0) {
-	//     if (click(home)) return location = "../"; 
-	//     else if (click(volume)) return run_volume();
-	//     else if (click(button_b)) {
-	// 		start();
-	// 	}
-	// } else {
-	// 	stop();
-	// }
+// const stop = _ => {
+// 	// if (anim_i === anim.length) {
+// 	// 	on_click = null;
+// 	// 	clearTimeout(photo_id);
+// 	// 	photo_id = null;
+// 	// }	
+// 	// if (--anim_i === 0) {
+// 	// 	music();
+// 	// 	on_click = click_page;
+// 	// } else {
+// 	// 	setTimeout(stop, speed);
+// 	// }
+// };
+
+const click_page = p => {
+	if (click_test(i_left, p)) {
+		set_state("root", "left", true);
+		draw_page();
+	} else if (click_test(i_right, p)) {
+		set_state("root", "right", true);
+		draw_page();
+	}
 };
 
 const draw_page = _ => {
 	ctx.fillStyle = bg_color;	
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	if (get_state('root', 'left') && get_state('root', 'right')) {
-		draw(i_root_left_right);
-	} else if (get_state('root', 'left') && !get_state('root', 'right')) {
-		draw(i_root_left_blank);
-	} else if (!get_state('root', 'left') && get_state('root', 'right')) {
-		draw(i_root_blank_right);
-	} else {
-		draw(i_root_blank_blank);
-	}	
-	draw(i_root_blank_blank);
+	ctx.fillRect(0, 0, canvas.width, canvas.height);	
+	if (get_state('root', 'left' )) draw(i_left);
+	if (get_state('root', 'right')) draw(i_right);
+	draw(i_root);
+	draw(i_reset_page_0);
+	draw(i_reset_all_0);
 };
 
 on_click  = click_page;
 
 window.addEventListener('load', e => {
 	draw_page();
-	//start();
+	on_click = click_page;
 });
