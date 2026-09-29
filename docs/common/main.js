@@ -272,9 +272,10 @@ window.click_y   = null;
 
 canvas.addEventListener('click', e => {
     init_audio();
-    click_x = (e.pageX - left) / scale;
-    click_y = (e.pageY - top ) / scale;
-    if (on_click !== null) on_click();
+    if (on_click !== null) {
+		[click_x, click_y] = canvas_coords(e);
+		on_click();
+	}
 });
 
 // pixel-based click detection

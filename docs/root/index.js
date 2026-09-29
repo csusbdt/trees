@@ -1,6 +1,9 @@
 import                    "../common/main.js" ;
 import c_img         from "../common/img.js"  ;
 import c_obj         from "../common/obj.js"  ;
+import { get_state, set_state, save_state } from '../common/state.js';
+
+const bg_color = window.getComputedStyle(document.body).backgroundColor;
 
 // const obj = (blue, border) => new c_obj([ blue, border ]);
 // const img = n => new c_img("./images/" + n + ".png");
@@ -92,6 +95,17 @@ const click_page = _ => {
 };
 
 const draw_page = _ => {
+	ctx.fillStyle = bg_color;	
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	if (get_state('root', 'left') && get_state('root', 'right')) {
+		draw(i_root_left_right);
+	} else if (get_state('root', 'left') && !get_state('root', 'right')) {
+		draw(i_root_left_blank);
+	} else if (!get_state('root', 'left') && get_state('root', 'right')) {
+		draw(i_root_blank_right);
+	} else {
+		draw(i_root_blank_blank);
+	}	
 	draw(i_root_blank_blank);
 };
 
