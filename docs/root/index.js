@@ -1,109 +1,110 @@
 import                    "../common/main.js" ;
 import c_img         from "../common/img.js"  ;
 import c_obj         from "../common/obj.js"  ;
-import { get_state, set_state, save_state } from '../common/state.js';
+import { get_state, set_state, save_state, reset_state } from '../common/state.js';
 
-const bg_color = window.getComputedStyle(document.body).backgroundColor;
+const speed  = 90;
 
-// const obj = (blue, border) => new c_obj([ blue, border ]);
-// const img = n => new c_img("./images/" + n + ".png");
+let reset_page = i_reset_page_0;
+let reset_all  = i_reset_all_0;
 
-// const home        = obj(img("home_b"  ), img("home"  ));
-// const volume      = obj(img("volume_b"), img("volume"));
-// const button      = img("button"     );
-// const button_b    = img("button_b"   );
-// const button_0    = img("button_0"   );
-// const button_1    = img("button_1"   );
-// const button_2    = img("button_2"   );
-// const button_g_1  = img("button_g_1" );
-// const button_g_2  = img("button_g_2" );
+const open_reset_page = _ => {
+	if (reset_page == i_reset_page_0) {
+		on_click = null;
+		reset_page = i_reset_page_1;
+		set_timeout(open_reset_page, speed);
+	} else if (reset_page == i_reset_page_1) {
+		reset_page = i_reset_page_2;
+		on_click = click_page;
+	} else assert(false);
+	draw_page();
+};
 
-// const couple      = img("couple"     );
-// const bathysphere = img("bathysphere");
-// const car         = img("car"        );
-// const books       = img("books"      );
-// const concert     = img("concert"    );
-// const synthesizer = img("synthesizer");
+const close_reset_page = _ => {
+	if (reset_page == i_reset_page_2) {
+		reset_page = i_reset_page_1;
+		set_timeout(close_reset_page, speed);
+	} else if (reset_page == i_reset_page_1) {
+		reset_page = i_reset_page_0;
+		on_click = click_page;
+	} else assert(false);
+	draw_page();
+};
+	
+const open_reset_all = _ => {
+	if (reset_all == i_reset_all_0) {
+		on_click = null;
+		reset_all = i_reset_all_1;
+		set_timeout(open_reset_all, speed);
+	} else if (reset_all == i_reset_all_1) {
+		reset_all = i_reset_all_2;
+		on_click = click_page;
+	} else assert(false);
+	draw_page();
+};
 
-// const photos = [ 
-// 	bathysphere, 
-// 	synthesizer, 
-// 	books, 
-// 	couple, 
-// 	concert
-// ];
-
-// const anim = [
-// 	[ bg_green, home, volume, button_b, button ],
-// 	[ button_0, button, home, volume ],
-// 	[ button_g_1, button_1, home, volume ],
-// 	[ button_g_2, button_2, home, volume ]
-// ];
-
-//const speed  = 220;
-// let anim_i   = 0;
-// let photo_i  = 0;
-// let photo_id = null;
-
-// const start = _ => {
-// 	// if (on_click !== null) {
-// 	// 	on_click = null;
-// 	// 	photo_i = 0;
-// 	// } else if (++anim_i === anim.length) {
-// 	// 	music();
-// 	// 	loop_photos();
-// 	// 	on_click = click_page;
-// 	// 	return;
-// 	// }
-// 	setTimeout(start, speed);
-// };
-
-// // const loop_photos = _ => {
-// // 	if (photo_id !== null && ++photo_i === photos.length) {
-// // 		photo_i = 0;
-// // 		music();
-// // 		music();
-// // 	}
-// // 	photo_id = setTimeout(loop_photos, 16000);
-// //     on_resize();
-// // };
-
-// const stop = _ => {
-// 	// if (anim_i === anim.length) {
-// 	// 	on_click = null;
-// 	// 	clearTimeout(photo_id);
-// 	// 	photo_id = null;
-// 	// }	
-// 	// if (--anim_i === 0) {
-// 	// 	music();
-// 	// 	on_click = click_page;
-// 	// } else {
-// 	// 	setTimeout(stop, speed);
-// 	// }
-// };
+const close_reset_all = _ => {
+	if (reset_all == i_reset_all_2) {
+		reset_all = i_reset_all_1;
+		set_timeout(close_reset_all, speed);
+	} else if (reset_all == i_reset_all_1) {
+		reset_all = i_reset_all_0;
+		on_click = click_page;
+	} else assert(false);
+	draw_page();
+};
 
 const click_page = p => {
-	if (click_test(i_left, p)) {
+	if (reset_page == i_reset_page_2) {
+		if (click_test(i_ok_reset_page, p)) {
+			set_state("root", "left" , null);
+			set_state("root", "right", null);
+    		on_click = null;
+			close_reset_page();
+		} else if (click_test(i_cancel_reset_page, p)) {
+    		on_click = null;
+			close_reset_page();
+		}
+	} else if (reset_all == i_reset_all_2) {
+		if (click_test(i_ok_reset_all, p)) {
+			reset_state();
+    		on_click = null;
+			close_reset_all();
+		} else if (click_test(i_cancel_reset_all, p)) {
+    		on_click = null;
+			close_reset_all();
+		}
+	} else if (click_test(i_reset_page_0, p)) {
+		open_reset_page();
+	} else if (click_test(i_reset_all_0, p)) {
+		open_reset_all();
+	} else if (click_test(i_left, p)) {
 		set_state("root", "left", true);
 		draw_page();
-		location.replace('./left/' );
+		go_left();
 	} else if (click_test(i_right, p)) {
 		set_state("root", "right", true);
 		draw_page();
+		go_right();
 	}
 };
 
 const draw_page = _ => {
-	ctx.fillStyle = bg_color;	
-	ctx.fillRect(0, 0, canvas.width, canvas.height);	
+	clear_canvas();	
 	if (get_state('root', 'left' )) draw(i_left);
 	if (get_state('root', 'right')) draw(i_right);
 	draw(i_root);
-	draw(i_reset_page_0);
-	draw(i_reset_all_0);
+	if (reset_page == i_reset_page_2) {
+		draw(i_ok_reset_page);
+		draw(i_cancel_reset_page);
+	}
+	if (reset_all == i_reset_all_2) {
+		draw(i_ok_reset_all);
+		draw(i_cancel_reset_all);
+	}
+	draw(reset_page);
+	draw(reset_all);
 };
-
-on_click  = click_page;
 
 window.addEventListener('load', e => {
 	draw_page();

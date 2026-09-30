@@ -147,49 +147,6 @@ window.clear_canvas = _ => {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 };
 
-///////////////////////////////////////////////////////////////////////////////////
-//
-// color palette
-//
-///////////////////////////////////////////////////////////////////////////////////
-
-/*
-
-window.colors = {
-	green  : [  64, 216, 122 ],
-	blue   : [  29, 225, 220 ],
-	yellow : [ 242, 244,  44 ],	
-	white  : [ 174, 201, 201 ],
-	black  : [  72,  55,  55 ]
-		
-};
-
-const rgb_blue   = `rgb(${colors.blue  [0]}, ${colors.blue  [1]}, ${colors.blue  [2]})`;
-const rgb_yellow = `rgb(${colors.yellow[0]}, ${colors.yellow[1]}, ${colors.yellow[2]})`;
-const rgb_green  = `rgb(${colors.green [0]}, ${colors.green [1]}, ${colors.green [2]})`;
-const rgb_white  = `rgb(${colors.white [0]}, ${colors.white [1]}, ${colors.white [2]})`;
-const rgb_black  = `rgb(${colors.black [0]}, ${colors.black [1]}, ${colors.black [2]})`;
-
-function c_bg(rgb) {
-	this.rgb = rgb;
-}
-
-c_bg.prototype.draw = function() {
-	ctx.fillStyle = this.rgb;
-	ctx.fillRect(0, 0, design_width, design_height);
-};
-
-c_bg.prototype.click = function() {
-	return false;
-};
-
-window.bg_green = new c_bg(rgb_green);
-window.bg_black = new c_bg(rgb_black);
-window.bg_white = new c_bg(rgb_white);
-
-*/
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // miscellaneous 
@@ -228,30 +185,6 @@ window.clear_interval = function(id) {
 	}
 }
 
-/*
-window.PHI = 1.61803398875;
-
-window.clamp = (n, a, b) => Math.max(Math.min(n, Math.max(a, b)), Math.min(a, b));
-
-// See http://www.phy.mtu.edu/~suits/NoteFreqCalcs.html
-window.freq = (octave_steps, base_f, steps) => {
-	return base_f * Math.pow(Math.pow(2, 1 / octave_steps), steps);
-};
-
-window.p   = (b, n, i) => Math.pow(Math.pow(b  , 1 / n), i);
-window.phi = (n, i   ) => Math.pow(Math.pow(PHI, 1 / n), i);
-
-*/
-
-// window.draw = (o, x = 0, y = 0) => {
-// 	if (o === null) return;
-// 	if (Array.isArray(o)) {
-// 		for (const i in o) {
-// 			o[i].draw(x, y);
-// 		}
-// 	} else o.draw(x, y);
-// };
-
 window.draw = (image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
 	if (sx === undefined) {
 		ctx.drawImage(image, 0, 0);
@@ -266,30 +199,6 @@ window.draw = (image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
 	}
 };
 
-// window.click = (o, x = 0, y = 0) => {
-// 	if (o === null) return;
-// 	if (Array.isArray(o)) {
-// 		for (const i in o) {
-// 			if (o[i].click(x, y)) return true;
-// 		}
-// 		return false;
-// 	} else return o.click(x, y);
-// };
-
-// window.start = (o, x = 0, y = 0) => {
-// 	if (o === null) return;
-// 	if (Array.isArray(o)) {
-// 		for (const i in o) o[i].start(x, y);
-// 	} else o.start(x, y);
-// };
-
-// window.stop = (o, x = 0, y = 0) => {
-// 	if (o === null) return;
-// 	if (Array.isArray(o)) {
-// 		for (const i in o) o[i].stop(x, y);
-// 	} else o.stop(x, y);
-// };
-
 window.url = path => {
 	if (window.location.pathname.startsWith('/trees')) {
 		return "/trees" + path;
@@ -298,12 +207,9 @@ window.url = path => {
 	}
 };
 
-// window.go_up    = () => delay(.001).starts(() => location.replace('../'     )).start();
-// window.go_left  = () => {
-// 	delay(.001).starts(() => location.replace('./left/' )).start();
-// };
-// window.go_right = () => delay(.001).starts(() => location.replace('./right/')).start();
-
+window.go_up    = () => { on_click = null; location.replace('../'     ); }
+window.go_left  = () => { on_click = null; location.replace('./left/' ); }
+window.go_right = () => { on_click = null; location.replace('./right/'); }
 
 ///////////////////////////////////////////////////////////////////////////////
 //
