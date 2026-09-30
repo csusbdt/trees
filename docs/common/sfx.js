@@ -1,3 +1,154 @@
+window.audio_context = null;
+
+const init_audio = _ => {
+	if (!audio_context) {
+		audio_context = new (window.AudioContext || window.webkitAudioContext)();
+	}
+	if (audio_context.state === 'suspended') {
+		audio_context.resume();
+	}
+};
+
+window.play_ok = _ => {
+	init_audio();
+	const oscillator = audio_context.createOscillator();
+	const gainNode   = audio_context.createGain();
+	oscillator.connect(gainNode);
+	gainNode.connect(audio_context.destination);	
+	const now        = audio_context.currentTime;
+	const duration   = 0.15;	
+	oscillator.type  = 'sine'; 
+	oscillator.frequency.setValueAtTime(300, now);
+	oscillator.frequency.exponentialRampToValueAtTime(900, now + duration);
+	gainNode.gain.setValueAtTime(0.4, now);
+	gainNode.gain.setValueAtTime(0.4, now + 0.03);
+	gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+	oscillator.start(now);
+	oscillator.stop(now + duration);
+}
+
+window.play_cancel = _ => {
+	init_audio();
+	const oscillator = audio_context.createOscillator();
+	const gainNode   = audio_context.createGain();
+	oscillator.connect(gainNode);
+	gainNode.connect(audio_context.destination);	
+	const now        = audio_context.currentTime;
+	const duration   = 0.08;	
+	oscillator.type  = 'triangle'; 
+	oscillator.frequency.setValueAtTime(400, now);
+	oscillator.frequency.exponentialRampToValueAtTime(250, now + duration);
+	gainNode.gain.setValueAtTime(0.3, now);
+	gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+	oscillator.start(now);
+	oscillator.stop(now + duration);
+}
+
+window.play_success = _ => {
+	init_audio();
+	const osc1  = audio_context.createOscillator();
+	const osc2  = audio_context.createOscillator();
+	const osc3  = audio_context.createOscillator();
+	const gain1 = audio_context.createGain();
+	const gain2 = audio_context.createGain();
+	const gain3 = audio_context.createGain();
+	osc1.connect(gain1);
+	osc2.connect(gain2);
+	osc3.connect(gain3);
+	gain1.connect(audio_context.destination);	
+	gain2.connect(audio_context.destination);	
+	gain3.connect(audio_context.destination);	
+	const now = audio_context.currentTime;
+	osc1.type = 'sine';
+	osc1.frequency.setValueAtTime(523.25, now); // C5 note
+	gain1.gain.setValueAtTime(0.2, now);
+	gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+	osc1.start(now);
+	osc1.stop(now + 0.05);
+	const time2 = now + 0.05;
+	osc2.type = 'sine';
+	osc2.frequency.setValueAtTime(659.25, time2); // E5 note
+	gain2.gain.setValueAtTime(0.2, time2);
+	gain2.gain.exponentialRampToValueAtTime(0.0001, time2 + 0.05);
+	osc2.start(time2);
+	osc2.stop(time2 + 0.05);
+	const time3 = now + 0.10;
+	const duration3 = 0.35;  
+	osc3.type = 'sine';
+	osc3.frequency.setValueAtTime(783.99, time3); 
+	osc3.frequency.exponentialRampToValueAtTime(1046.50, time3 + 0.10);
+	gain3.gain.setValueAtTime(0.3, time3);
+	gain3.gain.exponentialRampToValueAtTime(0.0001, time3 + duration3);
+	osc3.start(time3);
+	osc3.stop(time3 + duration3);
+}
+
+
+/*
+
+
+window.play_coin = _ => {
+  if (!audio_context) {
+    audio_context = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audio_context.state === 'suspended') {
+    audio_context.resume();
+  }
+  const oscillator = audio_context.createOscillator();
+  const gainNode = audio_context.createGain();
+  oscillator.connect(gainNode);
+  gainNode.connect(audio_context.destination);
+  const now = audio_context.currentTime;
+  oscillator.type = 'sine'; 
+	
+  // Create a pitch step effect (Retro 8-bit jump)
+  oscillator.frequency.setValueAtTime(587.33, now); // D5 note
+  oscillator.frequency.setValueAtTime(880.00, now + 0.1); // A5 note
+
+  // Volume Envelope: Quick fade out to prevent clicking sounds
+  gainNode.gain.setValueAtTime(0.3, now); 
+  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.4); 
+
+  // 5. Start and automatically stop/garbage-collect the nodes
+  oscillator.start(now);
+  oscillator.stop(now + 0.4);
+}
+
+*/
+
+
+
+
+// window.load_sfx = async (url) => {
+// 	const response    = await fetch(url);
+// 	const arrayBuffer = await response.arrayBuffer();
+// 	const audioBuffer = await audio_context.decodeAudioData(arrayBuffer);
+// 	const source      = audio_context.createBufferSource();
+// 	source.buffer     = audioBuffer;
+// 	source.connect(audio_context.destination);
+// 	return source;
+// }
+
+/*
+async function loadAndPlayAudio(url) {
+//  const context = new (window.AudioContext || window.webkitAudioContext)();
+  
+  // Fetch the raw binary data (much faster than parsing Base64 text)
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  
+  // Decode audio data asynchronously in a background thread
+  const audioBuffer = await context.decodeAudioData(arrayBuffer);
+  
+  // Play the sound instantly
+  const source = context.createBufferSource();
+  source.buffer = audioBuffer;
+  source.connect(context.destination);
+  source.start(0);
+}
+*/
+
+/*
 function c_sfx(file, volume) {
 	this.file = file;
 	if (typeof(volume) === 'undefined') {
@@ -93,3 +244,4 @@ c_sfx.prototype.start = function() {
 window.sfx = function(file, volume) {
 	return new c_sfx(file, volume);
 };
+*/
