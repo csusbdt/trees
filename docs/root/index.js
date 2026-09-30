@@ -1,15 +1,18 @@
-import                    "../common/main.js" ;
-import c_img         from "../common/img.js"  ;
-import c_obj         from "../common/obj.js"  ;
-import { get_state, set_state, save_state, reset_state } from '../common/state.js';
+import "../common/main.js" ;
+import "../common/state.js" ;
+import "../common/sfx.js";
 
 const speed  = 90;
+
+const thud = sfx("../sfx/thud_0.966.mp3", .7);
+const blop = sfx("../sfx/blop_0.264.mp3", .4);
 
 let reset_page = i_reset_page_0;
 let reset_all  = i_reset_all_0;
 
 const open_reset_page = _ => {
 	if (reset_page == i_reset_page_0) {
+		blop.start();
 		on_click = null;
 		reset_page = i_reset_page_1;
 		set_timeout(open_reset_page, speed);
@@ -22,6 +25,7 @@ const open_reset_page = _ => {
 
 const close_reset_page = _ => {
 	if (reset_page == i_reset_page_2) {
+		thud.start();
 		reset_page = i_reset_page_1;
 		set_timeout(close_reset_page, speed);
 	} else if (reset_page == i_reset_page_1) {
@@ -55,6 +59,7 @@ const close_reset_all = _ => {
 };
 
 const click_page = p => {
+	init_audio();
 	if (reset_page == i_reset_page_2) {
 		if (click_test(i_ok_reset_page, p)) {
 			set_state("root", "left" , null);

@@ -1,3 +1,5 @@
+import './state.js';
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // errors
@@ -47,34 +49,6 @@ window.addEventListener('unhandledrejection', e => {
 
 window.log = m => console.log(m);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// app_state
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-const app_name = "amby2";
-
-let app_state = localStorage.getItem(app_name);
-if (app_state === null) app_state = { version: "0", volume: 0.5 };
-else app_state = JSON.parse(app_state);
-
-window.set = (key, value) => {
-	app_state[key] = value;
-	localStorage.setItem(app_name, JSON.stringify(app_state));
-};
-
-window.get = (key, _default) => {
-	if (app_state[key] === undefined) set(key, _default);
-	return app_state[key];
-};
-
-window.run_page = page => {
-	import(page).then(o => o.run());
-};
-
-*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -85,29 +59,29 @@ window.run_page = page => {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-window.audio       = null;
+window.audio_context = null;
 let main_gain      = null;
 window.gain        = null;
 
 window.init_audio = _ => {
-	if (audio === null) {
-		audio = new (window.AudioContext || window.webkitAudioContext)();
+	if (audio_context === null) {
+		audio_context = new (window.AudioContext || window.webkitAudioContext)();
 	}
-	if (audio.state === "suspended") {
-		audio.resume();
+	if (audio_context.state === "suspended") {
+		audio_context.resume();
 	}
 	if (main_gain === null) {
-		const compressor = audio.createDynamicsCompressor();
-		compressor.threshold.setValueAtTime( -50, audio.currentTime);
-		compressor.knee     .setValueAtTime(  40, audio.currentTime);
-		compressor.ratio    .setValueAtTime(  12, audio.currentTime);
-		compressor.attack   .setValueAtTime(   0, audio.currentTime);
-		compressor.release  .setValueAtTime(0.25, audio.currentTime);
-		compressor.connect(audio.destination);
-		main_gain = audio.createGain();
+		const compressor = audio_context.createDynamicsCompressor();
+		compressor.threshold.setValueAtTime( -50, audio_context.currentTime);
+		compressor.knee     .setValueAtTime(  40, audio_context.currentTime);
+		compressor.ratio    .setValueAtTime(  12, audio_context.currentTime);
+		compressor.attack   .setValueAtTime(   0, audio_context.currentTime);
+		compressor.release  .setValueAtTime(0.25, audio_context.currentTime);
+		compressor.connect(audio_context.destination);
+		main_gain = audio_context.createGain();
 		main_gain.gain.value = 1;
 		main_gain.connect(compressor);
-		gain = audio.createGain();
+		gain = audio_context.createGain();
 		//gain.gain.value = get('volume', Math.pow(2, -5));
 		gain.connect(main_gain);
 	}
@@ -122,8 +96,8 @@ window.init_audio = _ => {
 window.ctx = canvas.getContext('2d');
 
 const click_test_canvas  = document.createElement('canvas');
-click_test_canvas.width  = canvas.width;
-click_test_canvas.height = canvas.height;
+click_test_canvas.width  = canvas.width  / 4;
+click_test_canvas.height = canvas.height / 4;
 
 const click_test_ctx     = click_test_canvas.getContext("2d", { willReadFrequently: true });
 
@@ -218,8 +192,6 @@ window.go_right = () => { on_click = null; location.replace('./right/'); }
 ///////////////////////////////////////////////////////////////////////////////
 
 window.on_click  = null;
-window.click_x   = null;
-window.click_y   = null;
 
 canvas.addEventListener('click', e => {
     init_audio();
@@ -230,13 +202,15 @@ canvas.addEventListener('click', e => {
 
 // pixel-based click detection
 window.click_test = (images, p) => {
+	const w = click_test_canvas.width;
+	const h = click_test_canvas.height;
 	if (!Array.isArray(images)) images = [images];
-    click_test_ctx.clearRect(0, 0, click_test_canvas.width, click_test_canvas.height);
+    click_test_ctx.clearRect(0, 0, w, h);
 	for (let i = 0; i < images.length; ++i) {
-		click_test_ctx.drawImage(images[i], 0, 0);
+		click_test_ctx.drawImage(images[i], 0, 0, w, h);
 	}
-	const int_x = Math.floor(p.x);
-    const int_y = Math.floor(p.y);
+	const int_x = Math.floor(p.x / 4);
+    const int_y = Math.floor(p.y / 4);
 	const pixel = click_test_ctx.getImageData(int_x, int_y, 1, 1).data;
 	return (pixel[0] + pixel[1] + pixel[2] != 0);
 };

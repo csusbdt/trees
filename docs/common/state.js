@@ -16,11 +16,11 @@ if (state_string === null) {
 	}	
 }
 
-export const save_state = () => {
+window.save_state = () => {
 	localStorage.setItem('trees', JSON.stringify(state));
 };
 
-export const get_state = (page, key) => {
+window.get_state = (page, key) => {
 	if (page === undefined) {
 		return state;
 	}
@@ -36,7 +36,7 @@ export const get_state = (page, key) => {
 	return state[page][key];
 };
 
-export const set_state = (page, key, value) => {
+window.set_state = (page, key, value) => {
 	if (key === undefined) {
 		throw new Error('set_state called without key');
 	}
@@ -50,7 +50,7 @@ export const set_state = (page, key, value) => {
 	save_state();
 };
 
-export const reset_state = () => {
+window.reset_state = () => {
 	state = initial_state;
 	save_state();
 };
