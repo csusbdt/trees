@@ -2,10 +2,11 @@ import "../common/main.js" ;
 import "../common/state.js" ;
 import "../common/sfx.js";
 
-const speed  = 90;
+const speed = 90;
 
-const thud = sfx("../sfx/thud_0.966.mp3", .7);
-const blop = sfx("../sfx/blop_0.264.mp3", .4);
+const thud  = sfx("../sfx/thud_0.966.mp3" , .7);
+const blop  = sfx("../sfx/blop_0.264.mp3" , .4);
+const click = sfx("../sfx/click_0.888.mp3", .4);
 
 let reset_page = i_reset_page_0;
 let reset_all  = i_reset_all_0;
