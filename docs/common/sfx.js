@@ -1,5 +1,7 @@
 window.audio_context = null;
 
+let click_buffer = null;
+
 const init_audio = _ => {
 	if (!audio_context) {
 		audio_context = new (window.AudioContext || window.webkitAudioContext)();
@@ -7,7 +9,24 @@ const init_audio = _ => {
 	if (audio_context.state === 'suspended') {
 		audio_context.resume();
 	}
+	if (click_buffer === null) {
+		const bufferSize = audio_context.sampleRate * 0.02; // 20ms duration (sharper)
+		click_buffer = audio_context.createBuffer(1, bufferSize, audio_context.sampleRate);
+		const data = click_buffer.getChannelData(0);  
+		for (let i = 0; i < bufferSize; i++) {
+			// Sharp exponential decay for a crisp mouse-click feel
+			data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 6);
+		}
+	}
 };
+
+window.play_click = _ => {
+	init_audio();
+	const source = audio_context.createBufferSource();
+	source.buffer = click_buffer;
+	source.connect(audio_context.destination);
+	source.start();
+}
 
 window.play_close = _ => {
 	init_audio();
@@ -27,7 +46,7 @@ window.play_close = _ => {
 	oscillator.stop(now + duration);
 }
 
-window.play_click = _ => {
+window.play_coin = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode   = audio_context.createGain();
@@ -44,7 +63,7 @@ window.play_click = _ => {
 	oscillator.stop(now + duration);
 }
 
-window.play_open = _ => {
+window.play_boin = _ => {
 	init_audio();
 	const osc1  = audio_context.createOscillator();
 	const osc2  = audio_context.createOscillator();
@@ -83,7 +102,7 @@ window.play_open = _ => {
 	osc3.stop(time3 + duration3);
 }
 
-window.play_something = _ => {
+window.play_open = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode = audio_context.createGain();
