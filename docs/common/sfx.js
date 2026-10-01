@@ -9,7 +9,7 @@ const init_audio = _ => {
 	}
 };
 
-window.play_ok = _ => {
+window.play_close = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode   = audio_context.createGain();
@@ -27,7 +27,7 @@ window.play_ok = _ => {
 	oscillator.stop(now + duration);
 }
 
-window.play_cancel = _ => {
+window.play_click = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode   = audio_context.createGain();
@@ -44,7 +44,7 @@ window.play_cancel = _ => {
 	oscillator.stop(now + duration);
 }
 
-window.play_success = _ => {
+window.play_open = _ => {
 	init_audio();
 	const osc1  = audio_context.createOscillator();
 	const osc2  = audio_context.createOscillator();
@@ -83,38 +83,21 @@ window.play_success = _ => {
 	osc3.stop(time3 + duration3);
 }
 
-
-/*
-
-
-window.play_coin = _ => {
-  if (!audio_context) {
-    audio_context = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audio_context.state === 'suspended') {
-    audio_context.resume();
-  }
-  const oscillator = audio_context.createOscillator();
-  const gainNode = audio_context.createGain();
-  oscillator.connect(gainNode);
-  gainNode.connect(audio_context.destination);
-  const now = audio_context.currentTime;
-  oscillator.type = 'sine'; 
-	
-  // Create a pitch step effect (Retro 8-bit jump)
-  oscillator.frequency.setValueAtTime(587.33, now); // D5 note
-  oscillator.frequency.setValueAtTime(880.00, now + 0.1); // A5 note
-
-  // Volume Envelope: Quick fade out to prevent clicking sounds
-  gainNode.gain.setValueAtTime(0.3, now); 
-  gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.4); 
-
-  // 5. Start and automatically stop/garbage-collect the nodes
-  oscillator.start(now);
-  oscillator.stop(now + 0.4);
+window.play_something = _ => {
+	init_audio();
+	const oscillator = audio_context.createOscillator();
+	const gainNode = audio_context.createGain();
+	oscillator.connect(gainNode);
+	gainNode.connect(audio_context.destination);
+	const now = audio_context.currentTime;
+	oscillator.type = 'sine'; 
+	oscillator.frequency.setValueAtTime(587.33, now); // D5 note
+	oscillator.frequency.setValueAtTime(880.00, now + 0.1); // A5 note
+	gainNode.gain.setValueAtTime(0.3, now); 
+	gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.4); 
+	oscillator.start(now);
+	oscillator.stop(now + 0.4);
 }
-
-*/
 
 
 

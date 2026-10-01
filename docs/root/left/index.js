@@ -14,8 +14,8 @@ const update_stub = _ => {
 
 const click_page = p => {
 	if (click_test(i_stub_3, p)) {
-		//blop.start();
 		on_click = null;
+		play_close();
 		set_interval(update_stub, speed);
 	}
 };

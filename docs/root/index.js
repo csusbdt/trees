@@ -9,8 +9,6 @@ let reset_all  = i_reset_all_0;
 
 const open_reset_page = _ => {
 	if (reset_page == i_reset_page_0) {
-		play_ok();
-		on_click = null;
 		reset_page = i_reset_page_1;
 		set_timeout(open_reset_page, speed);
 	} else if (reset_page == i_reset_page_1) {
@@ -22,7 +20,6 @@ const open_reset_page = _ => {
 
 const close_reset_page = _ => {
 	if (reset_page == i_reset_page_2) {
-		play_cancel();
 		reset_page = i_reset_page_1;
 		set_timeout(close_reset_page, speed);
 	} else if (reset_page == i_reset_page_1) {
@@ -34,7 +31,6 @@ const close_reset_page = _ => {
 	
 const open_reset_all = _ => {
 	if (reset_all == i_reset_all_0) {
-		on_click = null;
 		reset_all = i_reset_all_1;
 		set_timeout(open_reset_all, speed);
 	} else if (reset_all == i_reset_all_1) {
@@ -59,40 +55,47 @@ const click_page = p => {
 	init_audio();
 	if (reset_page == i_reset_page_2) {
 		if (click_test(i_ok_reset_page, p)) {
+    		on_click = null;
+			play_close();
 			set_state("root", "left" , null);
 			set_state("root", "right", null);
-    		on_click = null;
 			close_reset_page();
 		} else if (click_test(i_cancel_reset_page, p)) {
     		on_click = null;
+			play_close();
 			close_reset_page();
 		}
 	} else if (reset_all == i_reset_all_2) {
 		if (click_test(i_ok_reset_all, p)) {
-			reset_state();
     		on_click = null;
+			play_close();
+			reset_state();
 			close_reset_all();
 		} else if (click_test(i_cancel_reset_all, p)) {
     		on_click = null;
+			play_close();
 			close_reset_all();
 		}
 	} else if (click_test(i_reset_page_0, p)) {
+		on_click = null;
+		play_open();
 		open_reset_page();
 	} else if (click_test(i_reset_all_0, p)) {
+		on_click = null;
+		play_open();
 		open_reset_all();
 	} else if (click_test(i_left, p)) {
-		if (get_state("root", "left")) {
-			go_left();			
-		} else {
-			set_state("root", "left", true);
-			play_success();
-			draw_page();
-			set_timeout(go_left, 350);
-		}
+		on_click = null;
+		play_click();
+		set_state("root", "left", true);
+		draw_page();
+		set_timeout(go_left, 350);
 	} else if (click_test(i_right, p)) {
+		on_click = null;
+		play_click();
 		set_state("root", "right", true);
 		draw_page();
-		go_right();
+		set_timeout(go_right, 350);
 	}
 };
 
