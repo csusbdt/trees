@@ -1,10 +1,6 @@
 import "../../common/main.js" ;
+import "../../common/state.js" ;
 import "../../common/sfx.js";
-
-//const blop   = sfx("../../sfx/blop_0.264.mp3", .4);
-const speed  = 90;
-const stubs  = [ i_stub_3, i_stub_2, i_stub_1, i_stub_0, i_blank ];
-let   stub_i = 0;
 
 const update_stub = _ => {
 	if (stub_i == stubs.length - 1) return location.replace('../' );
@@ -13,16 +9,16 @@ const update_stub = _ => {
 };
 
 const click_page = p => {
-	if (click_test(i_stub_3, p)) {
+	if (click_test(i_up, p)) {
 		on_click = null;
-		play_close();
-		set_interval(update_stub, speed);
+		play_bop();
+		set_timeout(go_up, 90);
 	}
 };
 
 const draw_page = _ => {
 	clear_canvas();
-	draw(stubs[stub_i]);
+	draw(i_up);
 };
 
 window.addEventListener('load', e => {

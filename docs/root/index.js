@@ -28,7 +28,7 @@ const close_reset_page = _ => {
 	} else assert(false);
 	draw_page();
 };
-	
+
 const open_reset_all = _ => {
 	if (reset_all == i_reset_all_0) {
 		reset_all = i_reset_all_1;
@@ -56,46 +56,46 @@ const click_page = p => {
 	if (reset_page == i_reset_page_2) {
 		if (click_test(i_ok_reset_page, p)) {
     		on_click = null;
-			play_close();
+			play_bop();
 			set_state("root", "left" , null);
 			set_state("root", "right", null);
 			close_reset_page();
 		} else if (click_test(i_cancel_reset_page, p)) {
     		on_click = null;
-			play_close();
+			play_bop();
 			close_reset_page();
 		}
 	} else if (reset_all == i_reset_all_2) {
 		if (click_test(i_ok_reset_all, p)) {
     		on_click = null;
-			play_close();
+			play_bop();
 			reset_state();
 			close_reset_all();
 		} else if (click_test(i_cancel_reset_all, p)) {
     		on_click = null;
-			play_close();
+			play_bop();
 			close_reset_all();
 		}
 	} else if (click_test(i_reset_page_0, p)) {
 		on_click = null;
-		play_open();
+		play_boin();
 		open_reset_page();
 	} else if (click_test(i_reset_all_0, p)) {
 		on_click = null;
-		play_open();
+		play_boin();
 		open_reset_all();
 	} else if (click_test(i_left, p)) {
 		on_click = null;
-		play_click();
+		play_bop();
 		set_state("root", "left", true);
 		draw_page();
-		set_timeout(go_left, 350);
+		set_timeout(go_left, speed);
 	} else if (click_test(i_right, p)) {
 		on_click = null;
-		play_click();
+		play_bop();
 		set_state("root", "right", true);
 		draw_page();
-		set_timeout(go_right, 350);
+		set_timeout(go_right, speed);
 	}
 };
 

@@ -1,6 +1,6 @@
 window.audio_context = null;
 
-let click_buffer = null;
+let tick_buffer = null;
 
 const init_audio = _ => {
 	if (!audio_context) {
@@ -9,10 +9,10 @@ const init_audio = _ => {
 	if (audio_context.state === 'suspended') {
 		audio_context.resume();
 	}
-	if (click_buffer === null) {
+	if (tick_buffer === null) {
 		const bufferSize = audio_context.sampleRate * 0.02; // 20ms duration (sharper)
-		click_buffer = audio_context.createBuffer(1, bufferSize, audio_context.sampleRate);
-		const data = click_buffer.getChannelData(0);  
+		tick_buffer = audio_context.createBuffer(1, bufferSize, audio_context.sampleRate);
+		const data = tick_buffer.getChannelData(0);  
 		for (let i = 0; i < bufferSize; i++) {
 			// Sharp exponential decay for a crisp mouse-click feel
 			data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 6);
@@ -20,15 +20,17 @@ const init_audio = _ => {
 	}
 };
 
-window.play_click = _ => {
+window.play_tick_duration = 20;
+window.play_tick = _ => {
 	init_audio();
 	const source = audio_context.createBufferSource();
-	source.buffer = click_buffer;
+	source.buffer = tick_buffer;
 	source.connect(audio_context.destination);
 	source.start();
 }
 
-window.play_close = _ => {
+window.play_bop_duration = 150;
+window.play_bop = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode   = audio_context.createGain();
@@ -46,23 +48,7 @@ window.play_close = _ => {
 	oscillator.stop(now + duration);
 }
 
-window.play_coin = _ => {
-	init_audio();
-	const oscillator = audio_context.createOscillator();
-	const gainNode   = audio_context.createGain();
-	oscillator.connect(gainNode);
-	gainNode.connect(audio_context.destination);	
-	const now        = audio_context.currentTime;
-	const duration   = 0.08;	
-	oscillator.type  = 'triangle'; 
-	oscillator.frequency.setValueAtTime(400, now);
-	oscillator.frequency.exponentialRampToValueAtTime(250, now + duration);
-	gainNode.gain.setValueAtTime(0.3, now);
-	gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
-	oscillator.start(now);
-	oscillator.stop(now + duration);
-}
-
+window.play_boin_duration = 450;
 window.play_boin = _ => {
 	init_audio();
 	const osc1  = audio_context.createOscillator();
@@ -102,7 +88,26 @@ window.play_boin = _ => {
 	osc3.stop(time3 + duration3);
 }
 
-window.play_open = _ => {
+window.play_dit_duration = 80;
+window.play_dit = _ => {
+	init_audio();
+	const oscillator = audio_context.createOscillator();
+	const gainNode   = audio_context.createGain();
+	oscillator.connect(gainNode);
+	gainNode.connect(audio_context.destination);	
+	const now        = audio_context.currentTime;
+	const duration   = 0.08;	
+	oscillator.type  = 'triangle'; 
+	oscillator.frequency.setValueAtTime(400, now);
+	oscillator.frequency.exponentialRampToValueAtTime(250, now + duration);
+	gainNode.gain.setValueAtTime(0.3, now);
+	gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+	oscillator.start(now);
+	oscillator.stop(now + duration);
+}
+
+window.play_tink_duration = 400;
+window.play_tink = _ => {
 	init_audio();
 	const oscillator = audio_context.createOscillator();
 	const gainNode = audio_context.createGain();
@@ -117,7 +122,6 @@ window.play_open = _ => {
 	oscillator.start(now);
 	oscillator.stop(now + 0.4);
 }
-
 
 
 
