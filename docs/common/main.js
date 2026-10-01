@@ -30,7 +30,7 @@ window.addEventListener("error", e => {
 			location.reload();
 		});
 	}, 0);
-	if (audio !== null) audio.close();
+	if (audio_context !== null) audio_context.close();
 });
 
 window.addEventListener('unhandledrejection', e => {

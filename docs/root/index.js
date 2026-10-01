@@ -52,13 +52,11 @@ const close_reset_all = _ => {
 };
 
 const click_page = p => {
-	init_audio();
 	if (reset_page == i_reset_page_2) {
 		if (click_test(i_ok_reset_page, p)) {
     		on_click = null;
 			play_bop();
-			set_state("root", "left" , null);
-			set_state("root", "right", null);
+			reset_state("root");
 			close_reset_page();
 		} else if (click_test(i_cancel_reset_page, p)) {
     		on_click = null;

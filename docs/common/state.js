@@ -24,16 +24,16 @@ window.get_state = (page, key) => {
 	if (page === undefined) {
 		return state;
 	}
-	if (!(page in state)) {
-		state[page] = {};
+	if (!(page in state.pages)) {
+		state.pages[page] = {};
 	}
 	if (key === undefined) {
-		return state[page];
+		return state.pages[page];
 	}
-	if (!(key in state[page])) {
-		state[page][key] = null;
+	if (!(key in state.pages[page])) {
+		state.pages[page][key] = null;
 	}
-	return state[page][key];
+	return state.pages[page][key];
 };
 
 window.set_state = (page, key, value) => {
@@ -43,14 +43,18 @@ window.set_state = (page, key, value) => {
 	if (value === undefined) {
 		value = true;
 	}
-	if (!(page in state)) {
-		state[page] = {};
+	if (!(page in state.pages)) {
+		state.pages[page] = {};
 	}
-	state[page][key] = value;
+	state.pages[page][key] = value;
 	save_state();
 };
 
-window.reset_state = () => {
-	state = initial_state;
+window.reset_state = (page) => {
+	if (page === undefined) {
+		state = initial_state;
+	} else {
+		state.pages[page] = {};
+	}
 	save_state();
 };
