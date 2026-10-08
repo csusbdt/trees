@@ -459,12 +459,18 @@ window.g_loop = function(frames, z_index = 10, dx = 0, dy = 0) {
 ///////////////////////////////////////////////////////////////////////////////
 
 function c_touch(shapes, dx, dy) {
-	this.shapes    = shapes;
-	this.dx        = dx;
-	this.dy        = dy;
-	this.start_set = [];
-	this.stop_set  = [];
+	this.shapes       = shapes;
+	this.dx           = dx;
+	this.dy           = dy;
+	this.start_set    = [];
+	this.stop_set     = [];
+	this.sfx          = null;
 }
+
+c_touch.prototype.set_sfx = function(sfx) {
+	this.sfx = sfx;
+	return this;
+};
 
 c_touch.prototype.starts = function(...os) {
 	os.forEach(o => this.start_set.push(o));
@@ -526,8 +532,13 @@ window.g_touch = function(shapes, dx = 0, dy = 0) {
 
 const on_touch = p => {
 	for (let i = 0; i < touchables.length; ++i) {
-		if (touchables[i].touch(p)) {
-			if (g_play_success) g_play_success();
+		const touchable = touchables[i];
+		if (touchable.touch(p)) {
+			if (touchable.sfx === null) {
+				if (g_play_success) g_play_success();
+			} else {
+				touchable.sfx();
+			}
 			return;
 		}
 	}

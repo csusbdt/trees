@@ -19,7 +19,6 @@ const root_left_right     = g_loop(g_frames(i_root_left_right ));
 const reset_all_opening   = g_once(g_frames(i_reset_all_1 ));
 const reset_all_closing   = g_once(g_frames(i_reset_all_1 ));
 
-
 const f_ok_reset_all = function() {
 	reset_state();
 	root_blank_right.stop();
@@ -27,8 +26,6 @@ const f_ok_reset_all = function() {
 	root_left_right .stop();
 	root_blank_blank.start();
 };
-
-
 
 open_reset_all   .stops(open_reset_all, reset_all_closed, left, right      );
 ok_reset_all     .stops(ok_reset_all, cancel_reset_all, reset_all_opened   );
@@ -38,6 +35,8 @@ open_reset_all   .starts(reset_all_opening                                 );
 ok_reset_all     .starts(reset_all_closing, f_ok_reset_all                 );
 cancel_reset_all .starts(reset_all_closing                                 );
 
+open_reset_all.set_sfx(g_play_boin);
+cancel_reset_all.set_sfx(g_play_dit);
 
 left.starts(() => {
 	set_state('root', 'left', true);
@@ -50,7 +49,6 @@ right.starts(() => {
 
 reset_all_opening.starts(reset_all_opened, ok_reset_all, cancel_reset_all    );
 reset_all_closing.starts(reset_all_closed, open_reset_all, left, right       );
-
 
 window.addEventListener('load', e => {
 	reset_all_closed  .start();

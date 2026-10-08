@@ -1,6 +1,6 @@
 let audio_context = null;
 
-let tick_buffer = null;
+//let tick_buffer = null;
 
 const init_audio = _ => {
 	if (!audio_context) {
@@ -9,25 +9,25 @@ const init_audio = _ => {
 	if (audio_context.state === 'suspended') {
 		audio_context.resume();
 	}
-	if (tick_buffer === null) {
-		const bufferSize = audio_context.sampleRate * 0.02; // 20ms duration (sharper)
-		tick_buffer = audio_context.createBuffer(1, bufferSize, audio_context.sampleRate);
-		const data = tick_buffer.getChannelData(0);  
-		for (let i = 0; i < bufferSize; i++) {
-			// Sharp exponential decay for a crisp mouse-click feel
-			data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 6);
-		}
-	}
+	// if (tick_buffer === null) {
+	// 	const bufferSize = audio_context.sampleRate * 0.02; // 20ms duration (sharper)
+	// 	tick_buffer = audio_context.createBuffer(1, bufferSize, audio_context.sampleRate);
+	// 	const data = tick_buffer.getChannelData(0);  
+	// 	for (let i = 0; i < bufferSize; i++) {
+	// 		// Sharp exponential decay for a crisp mouse-click feel
+	// 		data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 6);
+	// 	}
+	// }
 };
 
-window.g_play_tick_duration = 20;
-window.g_play_tick = _ => {
-	init_audio();
-	const source = audio_context.createBufferSource();
-	source.buffer = tick_buffer;
-	source.connect(audio_context.destination);
-	source.start();
-}
+// window.g_play_tick_duration = 20;
+// window.g_play_tick = _ => {
+// 	init_audio();
+// 	const source = audio_context.createBufferSource();
+// 	source.buffer = tick_buffer;
+// 	source.connect(audio_context.destination);
+// 	source.start();
+// }
 
 window.g_play_bop_duration = 150;
 window.g_play_bop = _ => {
