@@ -16,21 +16,21 @@ To start a webserver:
 
 
 
-1  root
+0  root
 
-2  root\_left
+1  root\_left
 
-3  root\_right
+2  root\_right
 
-4  root\_left\_left stub
+3  root\_left\_left stub
 
-5  root\_left\_right stub
+4  root\_left\_right stub
 
-6  root\_right\_left stub
+5  root\_right\_left stub
 
 7  root\_right\_right stub
 
 
 
-
+branches === 6
 

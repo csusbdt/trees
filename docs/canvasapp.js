@@ -16,6 +16,7 @@ let previous_time    = new Date().getTime() / 1000;
 const drawables      = [];
 const updatables     = [];
 const ctx            = g_canvas.getContext('2d', { alpha: false });
+const default_z      = 10;
 
 window.g_play_success = g_play_bop;
 window.g_play_fail    = g_play_thud;
@@ -207,12 +208,12 @@ window.g_rect = function(left, top, right, bottom) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_frame(image, duration = 1/8, x = 0, y = 0) {
+function c_frame(image, duration = 1/8, x = 0, y = 0, z_index = default_z) {
 	this.image = image;
 	this.duration = duration;
 	this.x = x;
 	this.y = y;
-	this.z_index = 100;
+	this.z_index = z_index;
 }
 
 c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
@@ -239,15 +240,15 @@ c_frame.prototype.stop = function() {
 	return this;
 };
 
-window.g_frame = function(image, duration = 1/8, x = 0, y = 0) {
-	return new c_frame(image, duration, x, y);
+window.g_frame = function(image, duration = 1/8, x = 0, y = 0, z_index = default_z) {
+	return new c_frame(image, duration, x, y, z_index);
 };
 
-window.g_frames = function(images, duration = 1/8, x = 0, y = 0) {
+window.g_frames = function(images, duration = 1/8, x = 0, y = 0, z_index = default_z) {
 	if (!Array.isArray(images)) {
-		return [new c_frame(images, duration, x, y)];
+		return [new c_frame(images, duration, x, y, z_index)];
 	} else {
-		return images.map(image => new c_frame(image, duration, x, y));
+		return images.map(image => new c_frame(image, duration, x, y, z_index));
 	}
 };
 
@@ -299,7 +300,7 @@ window.g_delay = function(t) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_once(frames, z_index = 100, dx = 0, dy = 0) {
+function c_once(frames, z_index = default_z, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.z_index = z_index;
 	this.dx = dx;
@@ -368,7 +369,7 @@ c_once.prototype.update = function(dt) {
 	}
 };
 
-window.g_once = function(frames, z_index = 10, dx = 0, dy = 0) {
+window.g_once = function(frames, z_index = default_z, dx = 0, dy = 0) {
 	if (Array.isArray(frames)) {
 		return new c_once(frames, z_index, dx, dy);
 	} else {
@@ -382,7 +383,7 @@ window.g_once = function(frames, z_index = 10, dx = 0, dy = 0) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_loop(frames, z_index = 10, dx = 0, dy = 0) {
+function c_loop(frames, z_index = default_z, dx = 0, dy = 0) {
 	this.frames = frames;
 	this.z_index = z_index;
 	this.dx = dx;
@@ -444,7 +445,7 @@ c_loop.prototype.update = function(dt) {
 	}
 };
 
-window.g_loop = function(frames, z_index = 10, dx = 0, dy = 0) {
+window.g_loop = function(frames, z_index = default_z, dx = 0, dy = 0) {
 	if (Array.isArray(frames)) {
 		return new c_loop(frames, z_index, dx, dy);
 	} else {

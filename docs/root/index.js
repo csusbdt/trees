@@ -1,17 +1,35 @@
 import '../canvasapp.js';
 
-const digits = [ 
-	g_frame(i_0), 
-	g_frame(i_1), 
-	g_frame(i_2), 
-	g_frame(i_3), 
-	g_frame(i_4), 
-	g_frame(i_5), 
-	g_frame(i_6), 
-	g_frame(i_7), 
-	g_frame(i_8), 
-	g_frame(i_9) 
+const visited_digits = [ 
+	g_frame(i_0, 1, 85, 355, 15), 
+	g_frame(i_1, 1, 85, 355, 15), 
+	g_frame(i_2, 1, 85, 355, 15), 
+	g_frame(i_3, 1, 85, 355, 15), 
+	g_frame(i_4, 1, 85, 355, 15), 
+	g_frame(i_5, 1, 85, 355, 15), 
+	g_frame(i_6, 1, 85, 355, 15), 
+	g_frame(i_7, 1, 85, 355, 15), 
+	g_frame(i_8, 1, 85, 355, 15), 
+	g_frame(i_9, 1, 85, 355, 15) 
 ];
+
+const not_visited_digits = [ 
+	g_frame(i_0, 1, 85, 485, 15), 
+	g_frame(i_1, 1, 85, 485, 15), 
+	g_frame(i_2, 1, 85, 485, 15), 
+	g_frame(i_3, 1, 85, 485, 15), 
+	g_frame(i_4, 1, 85, 485, 15), 
+	g_frame(i_5, 1, 85, 485, 15), 
+	g_frame(i_6, 1, 85, 485, 15), 
+	g_frame(i_7, 1, 85, 485, 15), 
+	g_frame(i_8, 1, 85, 485, 15), 
+	g_frame(i_9, 1, 85, 485, 15) 
+];
+
+const num_branches    = 6;
+const num_visited     = Object.keys(get_state().pages).length - 1;
+const num_not_visited = num_branches - num_visited;
+
 
 const open_reset_all      = g_touch(g_circle(1905,  46, 100 ));
 const ok_reset_all        = g_touch(g_circle(1405, 308, 194 ));
@@ -30,7 +48,7 @@ open_visited.starts(visited_opening);
 close_visited.stops(visited_opened);
 close_visited.starts(visited_closing);
 visited_opening.starts(visited_opened, close_visited);
-visited_closing.starts(visited_closed, open_reset_all, open_visited);
+visited_closing.starts(visited_closed, open_reset_all, open_visited, left, right);
 
 const reset_all_opened    = g_loop(g_frames(i_reset_all_2     ));
 const reset_all_closed    = g_loop(g_frames(i_reset_all_0     ));
@@ -40,14 +58,18 @@ const root_blank_right    = g_loop(g_frames(i_root_blank_right));
 const root_left_blank     = g_loop(g_frames(i_root_left_blank ));
 const root_left_right     = g_loop(g_frames(i_root_left_right ));
 
-const reset_all_opening   = g_once(g_frames(i_reset_all_1 ));
-const reset_all_closing   = g_once(g_frames(i_reset_all_1 ));
+const reset_all_opening   = g_once(g_frames(i_reset_all_1     ));
+const reset_all_closing   = g_once(g_frames(i_reset_all_1     ));
 
-// const draw_digit = n => {
-// 	digits[n].draw();
-// }
+visited_opening.starts(
+	visited_digits[num_visited],
+	not_visited_digits[num_not_visited]
+);
 
-//const nodes_visited = Object.keys(get_state().pages).length;
+close_visited.stops(
+	visited_digits[num_visited],
+	not_visited_digits[num_not_visited]
+);
 
 const f_ok_reset_all = function() {
 	reset_state();
