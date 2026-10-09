@@ -1,10 +1,15 @@
 const initial_state = {
 	pages:   {},
-	version: '0'
+	version: '1'
 };
 initial_state.pages.root = {};
 
 let state = null;
+
+
+window.save_state = () => {
+	localStorage.setItem('trees', JSON.stringify(state));
+};
 
 let state_string = localStorage.getItem('trees');
 if (state_string === null) {
@@ -16,10 +21,6 @@ if (state_string === null) {
 		save_state();
 	}	
 }
-
-window.save_state = () => {
-	localStorage.setItem('trees', JSON.stringify(state));
-};
 
 window.get_state = (page, key) => {
 	if (page === undefined) {
