@@ -73,10 +73,11 @@ close_visited.stops(
 
 const f_ok_reset_all = function() {
 	reset_state();
-	root_blank_right.stop();
-	root_left_blank .stop();
-	root_left_right .stop();
-	root_blank_blank.start();
+	window.location.reload();
+	// root_blank_right.stop();
+	// root_left_blank .stop();
+	// root_left_right .stop();
+	// root_blank_blank.start();
 };
 
 open_reset_all   .stops(open_reset_all, reset_all_closed, left, right      );
