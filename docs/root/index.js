@@ -1,17 +1,17 @@
 import '../canvasapp.js';
 
-// const digits = [ 
-// 	g_frames(i_0), 
-// 	g_frames(i_1), 
-// 	g_frames(i_2), 
-// 	g_frames(i_3), 
-// 	g_frames(i_4), 
-// 	g_frames(i_5), 
-// 	g_frames(i_6), 
-// 	g_frames(i_7), 
-// 	g_frames(i_8), 
-// 	g_frames(i_9) 
-// ];
+const digits = [ 
+	g_frame(i_0), 
+	g_frame(i_1), 
+	g_frame(i_2), 
+	g_frame(i_3), 
+	g_frame(i_4), 
+	g_frame(i_5), 
+	g_frame(i_6), 
+	g_frame(i_7), 
+	g_frame(i_8), 
+	g_frame(i_9) 
+];
 
 const open_reset_all      = g_touch(g_circle(1905,  46, 100 ));
 const ok_reset_all        = g_touch(g_circle(1405, 308, 194 ));
