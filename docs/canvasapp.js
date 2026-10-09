@@ -9,14 +9,15 @@ import './sfx.js';
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-let touchables       = [];
-let dirty            = true;
-let previous_time    = new Date().getTime() / 1000;
+let touchables         = [];
+window.dirty              = true;
+let previous_time      = new Date().getTime() / 1000;
 
-const drawables      = [];
-const updatables     = [];
-const ctx            = g_canvas.getContext('2d', { alpha: false });
-const default_z      = 10;
+const drawables        = [];
+const updatables       = [];
+const ctx              = g_canvas.getContext('2d', { alpha: false });
+const default_duration = 1/8;
+const default_z        = 10;
 
 window.g_play_success = g_play_bop;
 window.g_play_fail    = g_play_thud;
@@ -208,12 +209,21 @@ window.g_rect = function(left, top, right, bottom) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_frame(image, duration = 1/8, x = 0, y = 0, z_index = default_z) {
+function c_frame(image, duration = default_duration, x = 0, y = 0, z_index = default_z, s = 1) {
 	this.image = image;
-	this.duration = duration;
+	if (duration === null) {
+		this.duration = default_duration;
+	} else {
+		this.duration = duration;
+	}
 	this.x = x;
 	this.y = y;
-	this.z_index = z_index;
+	if (z_index === null) {
+		this.z_index = default_z;
+	} else {
+		this.z_index = z_index;
+	}
+	this.s = s;
 }
 
 c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
@@ -225,8 +235,8 @@ c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
 		this.image.height, 
 		this.x + dx, 
 		this.y + dy, 
-		this.image.width, 
-		this.image.height);
+		this.image.width * this.s, 
+		this.image.height * this.s);
 };
 
 c_frame.prototype.start = function() {
@@ -240,15 +250,15 @@ c_frame.prototype.stop = function() {
 	return this;
 };
 
-window.g_frame = function(image, duration = 1/8, x = 0, y = 0, z_index = default_z) {
+window.g_frame = function(image, duration = default_duration, x = 0, y = 0, z_index = default_z, s = 1) {
 	return new c_frame(image, duration, x, y, z_index);
 };
 
-window.g_frames = function(images, duration = 1/8, x = 0, y = 0, z_index = default_z) {
+window.g_frames = function(images, duration = default_duration, x = 0, y = 0, z_index = default_z, s = 1) {
 	if (!Array.isArray(images)) {
-		return [new c_frame(images, duration, x, y, z_index)];
+		return [new c_frame(images, duration, x, y, z_index, s)];
 	} else {
-		return images.map(image => new c_frame(image, duration, x, y, z_index));
+		return images.map(image => new c_frame(image, duration, x, y, z_index, s));
 	}
 };
 
@@ -611,7 +621,7 @@ const remove_touchable = function(o) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-const add_drawable = function(o) {
+window.add_drawable = function(o) {
 	if (!('z_index' in o)) throw new Error(o);
 	if (drawables.includes(o)) return;
 	dirty = true;
@@ -629,7 +639,7 @@ const add_drawable = function(o) {
 // 	dirty = true;
 // };
 
-const remove_drawable = function(o) {
+window.remove_drawable = function(o) {
 	const i = drawables.indexOf(o);
 	if (i !== -1) {
 		drawables.splice(i, 1);
