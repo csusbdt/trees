@@ -3,8 +3,10 @@ import '../canvasapp.js';
 const num_branches        = 6;
 const num_visited         = Object.keys(get_state().pages).length - 1;
 const num_not_visited     = num_branches - num_visited;
-const visited             = g_number(num_visited    , 678, 370, 1, 11, 1.3);
-const not_visited         = g_number(num_not_visited, 678, 500, 1, 11, 1.3);
+const visited_0           = g_number(num_visited    , 120, 78, 1, 11, 0.2);
+const not_visited_0       = g_number(num_not_visited, 118, 99, 1, 11, 0.2);
+const visited_2           = g_number(num_visited    , 678, 370, 1, 11, 1.3);
+const not_visited_2       = g_number(num_not_visited, 678, 500, 1, 11, 1.3);
 
 const open_reset_all      = g_touch(g_circle(1905,  46, 100 ));
 const ok_reset_all        = g_touch(g_circle(1405, 308, 194 ));
@@ -18,9 +20,9 @@ const visited_closed      = g_frame(i_visited_0);
 const visited_opened      = g_frame(i_visited_2);
 const visited_opening     = g_once([g_frame(i_visited_1)]);
 const visited_closing     = g_once([g_frame(i_visited_1)]);
-open_visited.stops(visited_closed);
+open_visited.stops(visited_closed, visited_0, not_visited_0);
 open_visited.starts(visited_opening);
-close_visited.stops(visited_opened);
+close_visited.stops(visited_opened, visited_2, not_visited_2);
 close_visited.starts(visited_closing);
 
 const reset_all_opened    = g_loop(g_frames(i_reset_all_2     ));
@@ -34,18 +36,14 @@ const root_left_right     = g_loop(g_frames(i_root_left_right ));
 const reset_all_opening   = g_once(g_frames(i_reset_all_1     ));
 const reset_all_closing   = g_once(g_frames(i_reset_all_1     ));
 
-visited_closing.starts(visited_closed, open_reset_all, open_visited, left, right);
-visited_opening.starts(visited_opened, close_visited, visited, not_visited);
+visited_closing.starts(visited_closed, visited_0, not_visited_0, open_reset_all, open_visited, left, right);
+visited_opening.starts(visited_opened, close_visited, visited_2, not_visited_2);
 
-close_visited.stops(visited, not_visited);
+close_visited.stops(visited_2, not_visited_2);
 
 const f_ok_reset_all = function() {
 	reset_state();
 	window.location.reload();
-	// root_blank_right.stop();
-	// root_left_blank .stop();
-	// root_left_right .stop();
-	// root_blank_blank.start();
 };
 
 open_reset_all   .stops(open_reset_all, reset_all_closed, left, right      );
@@ -73,6 +71,8 @@ reset_all_closing.starts(reset_all_closed, open_visited, open_reset_all, left, r
 
 window.addEventListener('load', e => {
 	visited_closed.start();
+	visited_0.start();
+	not_visited_0.start();
 	open_visited.start();
 	reset_all_closed  .start();
     open_reset_all    .start();
