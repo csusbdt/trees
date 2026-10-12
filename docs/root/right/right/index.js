@@ -3,7 +3,14 @@ import '../../../state.js';
 
 const path = "root/right/right";
 
+const up    = g_frame(i_up);
 const go_up = g_touch(i_up).starts(g_go_up);
+
+const reset_2_off   = g_frame(i_reset_2_off );
+const reset_2_on    = g_frame(i_reset_2_on  );
+const reset_closing = g_once(g_frames([i_reset_1, i_reset_0, i_blank]));
+const reset_opening = g_once(g_frames([i_reset_0, i_reset_1])    );
+const t_reset       = g_touch(i_reset_2_on  );
 
 let s = [2, 2, 2, 0, 1, 1, 1];
 
@@ -81,6 +88,12 @@ const right_touchables = [
 
 const start_touchables = _ => {
 	go_up.start();
+	if (s[0] === 2 && s[1] === 2 && s[2] === 2 && s[3] === 0 && s[4] === 1 && s[5] === 1 && s[6] === 1) {
+	} else {
+		t_reset.start();
+		reset_2_off.stop();
+		reset_2_on.start();
+	}
 	const z = s.indexOf(0);
 	if (z < 6 && s[z+1] === 1) left_touchables[z+1].start();
 	if (z > 0 && s[z-1] === 2) right_touchables[z-1].start();
@@ -88,16 +101,24 @@ const start_touchables = _ => {
 	if (z > 1 && s[z-2] === 2) right_touchables[z-2].start();
 };
 
-const reset = () => {
-	right_touchables.forEach(t => t.stop());
-	left_touchables.forEach(t => t.stop());
+const reset = _ => {
+	// t_reset.stop();
+	// reset_2_on.stop();
+	// right_touchables.forEach(t => t.stop());
+	// left_touchables.forEach(t => t.stop());
 	stop_arrows();
 	s = [2, 2, 2, 0, 1, 1, 1];
+	reset_2_on.stop();
 	start_arrows();
     start_touchables();
 };
 
+t_reset.stops(reset_2_on).starts(reset_closing);
+reset_closing.starts(reset_opening, reset);
+reset_opening.starts(reset_2_off);
+
 window.addEventListener('load', () => {
-	start_arrows();
-    start_touchables();
+	up.start();
+	reset_2_off.start();
+	reset();
 });
