@@ -97,15 +97,11 @@ const start_touchables = _ => {
 	const z = s.indexOf(0);
 	if (z < 6 && s[z+1] === 1) left_touchables[z+1].start();
 	if (z > 0 && s[z-1] === 2) right_touchables[z-1].start();
-	if (z < 5 && s[z+2] === 1) left_touchables[z+2].start();
-	if (z > 1 && s[z-2] === 2) right_touchables[z-2].start();
+	if (z < 5 && s[z+2] === 1 && s[z+1] === 2) left_touchables[z+2].start();
+	if (z > 1 && s[z-2] === 2 && s[z-1] === 1) right_touchables[z-2].start();
 };
 
 const reset = _ => {
-	// t_reset.stop();
-	// reset_2_on.stop();
-	// right_touchables.forEach(t => t.stop());
-	// left_touchables.forEach(t => t.stop());
 	stop_arrows();
 	s = [2, 2, 2, 0, 1, 1, 1];
 	reset_2_on.stop();
