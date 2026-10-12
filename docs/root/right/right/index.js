@@ -3,6 +3,15 @@ import '../../../state.js';
 
 const path = "root/right/right";
 
+const left_off   = g_frame(i_left_off  );
+const right_off  = g_frame(i_right_off );
+const left_on    = g_frame(i_left_on   );
+const right_on   = g_frame(i_right_on  );
+const t_left     = g_touch(i_left_on   );
+const t_right    = g_touch(i_right_on  );
+t_left .starts(g_go_left  );
+t_right.starts(g_go_right );
+
 const up    = g_frame(i_up);
 const go_up = g_touch(i_up).starts(g_go_up);
 
@@ -51,6 +60,11 @@ const touch_left = i => {
 	if (s[i - 1] === 0) { s[i - 1] = 1;                }
 	else                { assert(i > 1); s[i - 2] = 1; }
 	s[i] = 0;
+	if (s[0] === 1 && s[1] === 1 && s[2] === 1 && s[3] === 0 && s[4] === 2 && s[5] === 2 && s[6] === 2) {
+		set_state(path, "left");
+		left_off.stop();
+		left_on.start();
+	}
 	stop_arrows();
 	start_arrows();
 	start_touchables();
@@ -61,6 +75,11 @@ const touch_right = i => {
 	if (s[i + 1] === 0) { s[i + 1] = 2;                }
 	else                { assert(i < 5); s[i + 2] = 2; }
 	s[i] = 0;
+	if (s[0] === 1 && s[1] === 1 && s[2] === 1 && s[3] === 0 && s[4] === 2 && s[5] === 2 && s[6] === 2) {
+		set_state(path, "right");
+		right_off.stop();
+		right_on.start();
+	}
 	stop_arrows();
 	start_arrows();
 	start_touchables();
@@ -99,6 +118,18 @@ const start_touchables = _ => {
 	if (z > 0 && s[z-1] === 2) right_touchables[z-1].start();
 	if (z < 5 && s[z+2] === 1 && s[z+1] === 2) left_touchables[z+2].start();
 	if (z > 1 && s[z-2] === 2 && s[z-1] === 1) right_touchables[z-2].start();
+	if (get_state(path, "left")) {
+		left_on.start();
+		t_left.start();
+	} else {
+		left_off.start();
+	}
+	if (get_state(path, "right")) {
+		t_right.start();
+		right_on.start();
+	} else {
+		right_off.start();
+	}
 };
 
 const reset = _ => {
@@ -107,6 +138,7 @@ const reset = _ => {
 	reset_2_on.stop();
 	start_arrows();
     start_touchables();
+
 };
 
 t_reset.stops(reset_2_on).starts(reset_closing);
