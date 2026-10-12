@@ -3,12 +3,101 @@ import '../../../state.js';
 
 const path = "root/right/right";
 
-const stub_closing = g_once(g_frames([i_stub_1, i_stub_2, i_stub_3, i_blank]))
-                     .starts(g_go_up);
-const stub_opened  = g_loop(g_frames(i_stub_0)).start();
-const stub_go      = g_touch(g_circle(950, 503, 230)).start()
-                     .stops(stub_opened).starts(stub_closing);
+const go_up = g_touch(i_up).starts(g_go_up);
 
-window.addEventListener('load', e => {
-    get_state(path);
+let s = [2, 2, 2, 0, 1, 1, 1];
+
+const left_arrows = [  // 1 in s
+	g_frame(i_left_arrow_0),	
+	g_frame(i_left_arrow_1),
+	g_frame(i_left_arrow_2),
+	g_frame(i_left_arrow_3),
+	g_frame(i_left_arrow_4),
+	g_frame(i_left_arrow_5),
+	g_frame(i_left_arrow_6)
+];
+
+const right_arrows = [  // 2 in s
+	g_frame(i_right_arrow_0),	
+	g_frame(i_right_arrow_1),
+	g_frame(i_right_arrow_2),
+	g_frame(i_right_arrow_3),
+	g_frame(i_right_arrow_4),
+	g_frame(i_right_arrow_5),
+	g_frame(i_right_arrow_6)
+];
+
+const stop_arrows = _ => {
+	left_arrows.forEach(a => a.stop());
+	right_arrows.forEach(a => a.stop());
+};
+
+const start_arrows = _ => {
+	s.forEach((a, i) => {
+		if (a === 1) left_arrows[i].start();		
+		else if (a === 2) right_arrows[i].start();
+	});
+};
+
+const touch_left = i => {
+	assert(i > 0);
+	if (s[i - 1] === 0) { s[i - 1] = 1;                }
+	else                { assert(i > 1); s[i - 2] = 1; }
+	s[i] = 0;
+	stop_arrows();
+	start_arrows();
+	start_touchables();
+};
+
+const touch_right = i => {
+	assert(i < 6);
+	if (s[i + 1] === 0) { s[i + 1] = 2;                }
+	else                { assert(i < 5); s[i + 2] = 2; }
+	s[i] = 0;
+	stop_arrows();
+	start_arrows();
+	start_touchables();
+};
+
+const left_touchables = [
+    g_touch(i_left_arrow_0).starts(_ => touch_left(0)),
+    g_touch(i_left_arrow_1).starts(_ => touch_left(1)),
+    g_touch(i_left_arrow_2).starts(_ => touch_left(2)),
+    g_touch(i_left_arrow_3).starts(_ => touch_left(3)),
+    g_touch(i_left_arrow_4).starts(_ => touch_left(4)),
+    g_touch(i_left_arrow_5).starts(_ => touch_left(5)),
+    g_touch(i_left_arrow_6).starts(_ => touch_left(6))
+];
+
+const right_touchables = [
+    g_touch(i_right_arrow_0).starts(_ => touch_right(0)),
+    g_touch(i_right_arrow_1).starts(_ => touch_right(1)),
+    g_touch(i_right_arrow_2).starts(_ => touch_right(2)),
+    g_touch(i_right_arrow_3).starts(_ => touch_right(3)),
+    g_touch(i_right_arrow_4).starts(_ => touch_right(4)),
+    g_touch(i_right_arrow_5).starts(_ => touch_right(5)),
+    g_touch(i_right_arrow_6).starts(_ => touch_right(6))
+];
+
+const start_touchables = _ => {
+	go_up.start();
+	const z = s.indexOf(0);
+	if (z < 6 && s[z+1] === 1) left_touchables[z+1].start();
+	if (z > 0 && s[z-1] === 2) right_touchables[z-1].start();
+	if (z < 5 && s[z+2] === 1) left_touchables[z+2].start();
+	if (z > 1 && s[z-2] === 2) right_touchables[z-2].start();
+};
+
+const reset = () => {
+	right_touchables.forEach(t => t.stop());
+	left_touchables.forEach(t => t.stop());
+	stop_arrows();
+	s = [2, 2, 2, 0, 1, 1, 1];
+	start_arrows();
+    start_touchables();
+};
+
+window.addEventListener('load', () => {
+	start_arrows();
+    start_touchables();
 });

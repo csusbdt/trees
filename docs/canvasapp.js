@@ -17,6 +17,7 @@ window.updatables        = [];
 window.ctx               = g_canvas.getContext('2d', { alpha: false });
 window.default_duration = 1/8;
 window.default_z        = 10;
+window.default_delay    = 1/8;
 window.dirty            = true;
 
 window.g_play_success = g_play_bop;
@@ -47,15 +48,18 @@ window.g_url = path => {
 };
 
 window.g_go_up = _ => {
-	g_delay(.01).starts(() => location.replace('../'     )).start();
+	clear_touchables();
+	g_delay().starts(() => location.replace('../'     )).start();
 };
 
 window.g_go_left = _ => {
-	g_delay(.01).starts(() => location.replace('./left/' )).start();
+	clear_touchables();
+	g_delay().starts(() => location.replace('./left/' )).start();
 };
 
 window.g_go_right = _ => {
-	g_delay(.01).starts(() => location.replace('./right/')).start();
+	clear_touchables();
+	g_delay().starts(() => location.replace('./right/')).start();
 };
 
 function stop_stop_sets(...stop_sets) {
@@ -263,7 +267,7 @@ window.g_frames = function(images, duration = default_duration, x = 0, y = 0, z_
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_delay(t) {
+function c_delay(t = default_delay) {
 	this.t = t;
 	this.start_set = [];
 	this.stop_set  = [];
