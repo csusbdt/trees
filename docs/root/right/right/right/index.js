@@ -1,6 +1,6 @@
 import '../../../../canvasapp.js';
 
-const path = 'root/right/right/left';
+const path = 'root/right/right/right';
 
 const stub_closing = g_once(g_frames([i_stub_1, i_stub_2, i_stub_3, i_blank]))
                      .starts(g_go_up);

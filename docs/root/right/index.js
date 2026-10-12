@@ -10,11 +10,13 @@ const small  = g_frame(i_small, 1/8,   0, 200);
 const big    = g_frame(i_big  , 1/8, 200, 400);
 const up     = g_frame(i_up    );
 const left   = g_frame(i_left  );
-const right  = g_frame(i_right );
 
-const go_up    = g_touch(i_up   );
-const go_left  = g_touch(i_left );
-const go_right = g_touch(i_right);
+const right_opening = g_once(g_frames([i_right_0, i_right_1, i_right_2, i_right_3, i_right_4, i_right_5 ]));
+const right_opened  = g_frame(i_right_6);
+
+const go_up    = g_touch(i_up      );
+const go_left  = g_touch(i_left    );
+const go_right = g_touch(i_right_6 );
 
 // +-----+-----+
 // | t00 | t10 |
@@ -36,15 +38,14 @@ const going_left = g_once([
     g_frame(i_player, 1/8,  -67, 200),
     g_frame(i_player, 1/8, -134, 200),
     g_frame(i_player, 1/8, -200, 200),
-    g_frame(i_left,  3/8)
+    g_frame(i_left, 3/8)
 ]);
 
 const going_right = g_once([
     g_frame(i_player, 3/8,    0, 400), 
     g_frame(i_player, 1/8,  -67, 400),
     g_frame(i_player, 1/8, -134, 400),
-    g_frame(i_player, 1/8, -200, 400),
-    g_frame(i_right,  3/8)
+    g_frame(i_player, 1/8, -200, 400)
 ]);
 
 go_up.starts(g_go_up);
@@ -52,8 +53,9 @@ go_up.starts(g_go_up);
 go_left.starts(g_go_left);
 go_right.starts(g_go_right);
 
-going_left.starts(g_go_left);
-going_right.starts(g_go_right);
+going_left.starts(g_go_left); 
+going_right.starts(right_opening);
+right_opening.starts(right_opened, g_go_right);
 
 const can_move_left = _ => {
     if (player.x === 0) return false;
@@ -225,7 +227,7 @@ window.addEventListener('load', e => {
         left.start();
     }
     if (get_state("root/right", "right")) {
-        right.start();
+        right_opened.start();
     }
     start_touches();
 });

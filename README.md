@@ -28,9 +28,13 @@ To start a webserver:
 
 5  root\_right\_left stub
 
-7  root\_right\_right stub
+6  root\_right\_right stub
+
+7  root\_right\_right\_left stub
+
+8  root\_right\_right\_right stub
 
 
 
-branches === 6
+branches === 8
 

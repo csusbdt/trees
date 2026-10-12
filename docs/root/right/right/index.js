@@ -1,7 +1,7 @@
 import '../../../canvasapp.js';
 import '../../../state.js';
 
-const path = "root/right/right";
+const path = "root/right/right/";
 
 const left_off   = g_frame(i_left_off  );
 const right_off  = g_frame(i_right_off );
