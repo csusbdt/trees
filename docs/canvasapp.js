@@ -47,9 +47,9 @@ window.g_url = path => {
 	}
 };
 
-window.g_go_up = _ => {
+window.g_go_up = t => {
 	clear_touchables();
-	g_delay().starts(() => location.replace('../'     )).start();
+	g_delay(t).starts(() => location.replace('../'     )).start();
 };
 
 window.g_go_left = _ => {
@@ -720,7 +720,7 @@ c_number.prototype.draw = function(ctx, dx = 0, dy = 0) {
     		digit_images[d].width  * this.s, 
     		digit_images[d].height * this.s
         );
-        dx += 42;
+        dx += this.s * 40;
     });
 };
 

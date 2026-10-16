@@ -16,6 +16,34 @@ To start a webserver:
 
 
 
+To debug running on iPhone:
+
+
+
+\~\~\~
+
+&#x20;  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+&#x20;  npx remotedebug-ios-webkit-adapter --port=9000
+
+
+
+&#x20;  //ios\_webkit\_debug\_proxy --proxy 27015:9222
+
+&#x20;  //remotedebug\_ios\_webkit\_adapter --port=9000
+
+
+
+\~\~\~
+
+
+
+The go to chrome://inspect/#devices
+
+
+
+
+
 0  root
 
 1  root\_left
@@ -26,7 +54,7 @@ To start a webserver:
 
 4  root\_left\_right stub
 
-5  root\_right\_left stub
+5  root\_right\_left
 
 6  root\_right\_right stub
 
@@ -34,7 +62,11 @@ To start a webserver:
 
 8  root\_right\_right\_right stub
 
+9  root\_right\_left\_left stub
+
+10 root\_right\_left\_right stub
 
 
-branches === 8
+
+branches === 10
 

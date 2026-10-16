@@ -1,10 +1,10 @@
 import '../canvasapp.js';
 
-const num_branches        = 8;
+const num_branches        = 10;
 const num_visited         = Object.keys(get_state().pages).length - 1;
 const num_not_visited     = num_branches - num_visited;
-const visited_0           = g_number(num_visited    , 120, 78, 1, 11, 0.2);
-const not_visited_0       = g_number(num_not_visited, 118, 99, 1, 11, 0.2);
+const visited_0           = g_number(num_visited    , 120,  78, 1, 11, 0.2);
+const not_visited_0       = g_number(num_not_visited, 118,  99, 1, 11, 0.2);
 const visited_2           = g_number(num_visited    , 678, 370, 1, 11, 1.3);
 const not_visited_2       = g_number(num_not_visited, 678, 500, 1, 11, 1.3);
 
