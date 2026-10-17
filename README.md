@@ -16,7 +16,7 @@ To start a webserver:
 
 
 
-To debug running on iPhone:
+To run scripts in power shell:
 
 
 
@@ -24,21 +24,11 @@ To debug running on iPhone:
 
 &#x20;  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 
-&#x20;  npx remotedebug-ios-webkit-adapter --port=9000
-
-
-
-&#x20;  //ios\_webkit\_debug\_proxy --proxy 27015:9222
-
-&#x20;  //remotedebug\_ios\_webkit\_adapter --port=9000
-
-
-
 \~\~\~
 
 
 
-The go to chrome://inspect/#devices
+For console output on iPhone, go to chrome://inspect
 
 
 
@@ -64,9 +54,15 @@ The go to chrome://inspect/#devices
 
 9  root\_right\_left\_left stub
 
-10 root\_right\_left\_right stub
+10 root\_right\_left\_right
+
+11 root\_right\_left\_right\_left stub
+
+12 root\_right\_left\_right\_right stub
 
 
 
-branches === 10
+branches === 12
+
+
 

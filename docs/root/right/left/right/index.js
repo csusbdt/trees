@@ -2,12 +2,29 @@ import '../../../../canvasapp.js';
 
 const path = 'root/right/left/right';
 
-const stub_closing = g_once(g_frames([i_stub_1, i_stub_2, i_stub_3, i_blank]))
-                     .starts(g_go_up);
-const stub_opened  = g_loop(g_frames(i_stub_0)).start();
-const stub_go      = g_touch(g_circle(950, 503, 230)).start()
-                     .stops(stub_opened).starts(stub_closing);
+const dead     = g_frame(i_dead  ).start();
+const up       = g_frame(i_up    ).start();
+const left     = g_frame(i_left  ).start();
+const right    = g_frame(i_right ).start();
+
+const go_up    = g_touch(i_up    );
+const go_left  = g_touch(i_left  );
+const go_right = g_touch(i_right );
+const dead_t   = g_touch(i_dead  );
+
+const start_touchables = _ => {
+    go_up.start();
+    go_left.start();
+    go_right.start();
+    dead_t.start();
+};
+
+go_up   .starts(g_go_up   );
+go_left .starts(g_go_left );
+go_right.starts(g_go_right);
+dead_t  .starts(start_touchables, g_play_boin);
 
 window.addEventListener('load', e => {
     get_state(path);
+    start_touchables();
 });
