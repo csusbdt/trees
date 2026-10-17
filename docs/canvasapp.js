@@ -12,16 +12,16 @@ import './sfx.js';
 let touchables          = [];
 let previous_time       = new Date().getTime() / 1000;
 
-window.drawables         = [];
-window.updatables        = [];
-window.ctx               = g_canvas.getContext('2d', { alpha: false });
+window.drawables        = [];
+window.updatables       = [];
+window.ctx              = g_canvas.getContext('2d', { alpha: false });
 window.default_duration = 1/8;
 window.default_z        = 10;
 window.default_delay    = 1/8;
 window.dirty            = true;
 
-window.g_play_success = g_play_bop;
-window.g_play_fail    = g_play_thud;
+window.g_play_success   = g_play_bop;
+window.g_play_fail      = g_play_thud;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -555,37 +555,45 @@ const on_touch = p => {
 	if (g_play_fail) g_play_fail();
 };
 
-const mousemove = e => {
-	e.preventDefault();
-	e.stopImmediatePropagation();
-	g_canvas.style.cursor = 'default';
-};
-
-const mousedown = e => {
+const pointerup = e => {
 	e.preventDefault();
 	e.stopImmediatePropagation();
 	g_canvas.style.cursor = 'default';
 	on_touch(canvas_coords(e));
 };
 
+// const mousemove = e => {
+// 	e.preventDefault();
+// 	e.stopImmediatePropagation();
+// 	g_canvas.style.cursor = 'default';
+// };
+
+// const mousedown = e => {
+// 	e.preventDefault();
+// 	e.stopImmediatePropagation();
+// 	g_canvas.style.cursor = 'default';
+// 	on_touch(canvas_coords(e));
+// };
+
 // the following touchend and touchmove code needed for fullscreen on chrome
 // see: https://stackoverflow.com/questions/42945378/full-screen-event-on-touch-not-working-on-chrome/42948120
 
-const touchend = e => {
-	e.preventDefault();
-	e.stopImmediatePropagation();
-	g_canvas.style.cursor = 'none';
-	on_touch(canvas_coords(e.changedTouches[0]));
-};
+// const touchend = e => {
+// 	e.preventDefault();
+// 	e.stopImmediatePropagation();
+// 	g_canvas.style.cursor = 'none';
+// 	on_touch(canvas_coords(e.changedTouches[0]));
+// };
 
-const touchmove = e => {
-	e.preventDefault();
-}
+// const touchmove = e => {
+// 	e.preventDefault();
+// };
 
-window.addEventListener('mousemove', mousemove, true);
-window.addEventListener('mousedown', mousedown, true); 
-window.addEventListener('touchend' , touchend , true); 
-window.addEventListener('touchmove', touchmove, { passive: false }); 
+window.addEventListener('pointerup', pointerup, true);
+// window.addEventListener('mousemove', mousemove, true);
+// window.addEventListener('mousedown', mousedown, true); 
+// window.addEventListener('touchend' , touchend , true); 
+// window.addEventListener('touchmove', touchmove, { passive: false }); 
 
 
 ///////////////////////////////////////////////////////////////////////////////
