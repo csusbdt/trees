@@ -1,7 +1,5 @@
 import '../../canvasapp.js';
 
-const path   = "root/right";
-
 const border = g_frame(i_border);
 const lines  = g_frame(i_lines );
 const arrows = g_frame(i_arrows);
@@ -186,10 +184,10 @@ t12.starts(_ => {
 
 const start_touches = _ => {
     go_up.start();
-    if (get_state(path, "left")) {
+    if (get_state(document.title, "left")) {
         go_left.start();
     }
-    if (get_state(path, "right")) {
+    if (get_state(document.title, "right")) {
         go_right.start();
     }
     if (player.x === 0 && player.y === 0) {
@@ -223,10 +221,10 @@ window.addEventListener('load', e => {
     small.start();
     big.start();
     up.start();
-    if (get_state("root/right", "left")) {
+    if (get_state(document.title, "left")) {
         left.start();
     }
-    if (get_state("root/right", "right")) {
+    if (get_state(document.title, "right")) {
         right_opened.start();
     }
     start_touches();

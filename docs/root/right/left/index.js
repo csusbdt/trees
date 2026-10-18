@@ -1,7 +1,5 @@
 import '../../../canvasapp.js';
 
-const path = 'root/right/left';
-
 const center   = g_frame(i_center  ).start();
 const up       = g_frame(i_up      ).start();
 const left_0   = g_frame(i_left_0  ).start();
@@ -16,5 +14,5 @@ go_left .starts(g_go_left );
 go_right.starts(g_go_right);
 
 window.addEventListener('load', e => {
-    get_state(path);
+    get_state(document.title);
 });

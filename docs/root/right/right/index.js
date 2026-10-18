@@ -1,8 +1,6 @@
 import '../../../canvasapp.js';
 import '../../../state.js';
 
-const path = "root/right/right/";
-
 const left_off   = g_frame(i_left_off  );
 const right_off  = g_frame(i_right_off );
 const left_on    = g_frame(i_left_on   );
@@ -61,7 +59,7 @@ const touch_left = i => {
 	else                { assert(i > 1); s[i - 2] = 1; }
 	s[i] = 0;
 	if (s[0] === 1 && s[1] === 1 && s[2] === 1 && s[3] === 0 && s[4] === 2 && s[5] === 2 && s[6] === 2) {
-		set_state(path, "left");
+		set_state(document.title, "left");
 		left_off.stop();
 		left_on.start();
 	}
@@ -76,7 +74,7 @@ const touch_right = i => {
 	else                { assert(i < 5); s[i + 2] = 2; }
 	s[i] = 0;
 	if (s[0] === 1 && s[1] === 1 && s[2] === 1 && s[3] === 0 && s[4] === 2 && s[5] === 2 && s[6] === 2) {
-		set_state(path, "right");
+		set_state(document.title, "right");
 		right_off.stop();
 		right_on.start();
 	}
@@ -118,13 +116,13 @@ const start_touchables = _ => {
 	if (z > 0 && s[z-1] === 2) right_touchables[z-1].start();
 	if (z < 5 && s[z+2] === 1 && s[z+1] === 2) left_touchables[z+2].start();
 	if (z > 1 && s[z-2] === 2 && s[z-1] === 1) right_touchables[z-2].start();
-	if (get_state(path, "left")) {
+	if (get_state(document.title, "left")) {
 		left_on.start();
 		t_left.start();
 	} else {
 		left_off.start();
 	}
-	if (get_state(path, "right")) {
+	if (get_state(document.title, "right")) {
 		t_right.start();
 		right_on.start();
 	} else {

@@ -46,25 +46,9 @@ const fire_gun      = g_touch(i_gun_0);
 
 // event handlers
 
-window.addEventListener('load', e => {
-    up_opened.start();
-    play_opened.start();
-    ship.start();
-    gun.start();
-    if (get_state("root/left", "left")) {
-        left_opened.start();
-        go_left.start();
-    }
-    if (get_state("root/left", "right")) {
-        right_opened.start();
-        go_right.start();
-    }
-    start_touchables();
-});
-
 const on_end_music = e => {
 	clear_touchables();
-    set_state("root/left", "left", true);
+    set_state(document.title, "left", true);
     pause_opened.stop();
     pause_closing.start();
     left_opened.start();
@@ -76,10 +60,10 @@ const music = g_music("say_it_isnt_so.mp3", on_end_music, .4);
 
 const start_touchables = _ => {
     go_up.start();
-    if (get_state("root/left", "left")) {
+    if (get_state(document.title, "left")) {
         go_left.start();
     }
-    if (get_state("root/left", "right")) {
+    if (get_state(document.title, "right")) {
         go_right.start();
     }
     if (g_is_music_playing) {
@@ -117,7 +101,7 @@ gun_firing.starts(gun, _ => {
 });
 
 blob_0.starts(ship, _ => {
-    set_state("root/left", "right", true);
+    set_state(document.title, "right", true);
     right_opened.start();
     start_touchables();
 });
@@ -125,7 +109,7 @@ blob_0.starts(ship, _ => {
 blob_1.starts(ship, start_touchables);
 
 blob_2.starts(ship, _ => {
-    set_state("root/left", "right", true);
+    set_state(document.title, "right", true);
     right_opened.start();
     start_touchables();
 });
@@ -145,3 +129,19 @@ go_left.starts(left_closing);
 pause_music.starts(pause_closing);
 play_music.starts(play_closing);
 fire_gun.starts(gun_firing);
+
+window.addEventListener('load', e => {
+    up_opened.start();
+    play_opened.start();
+    ship.start();
+    gun.start();
+    if (get_state(document.title, "left")) {
+        left_opened.start();
+        go_left.start();
+    }
+    if (get_state(document.title, "right")) {
+        right_opened.start();
+        go_right.start();
+    }
+    start_touchables();
+});

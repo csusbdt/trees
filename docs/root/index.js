@@ -58,11 +58,11 @@ open_reset_all.set_sfx(g_play_boin);
 cancel_reset_all.set_sfx(g_play_dit);
 
 left.starts(() => {
-	set_state('root', 'left', true);
+	set_state(document.title, 'left', true);
 	g_go_left();
 });
 right.starts(() => {
-	set_state('root', 'right', true);
+	set_state(document.title, 'right', true);
 	g_go_right();
 });
 
@@ -78,11 +78,11 @@ window.addEventListener('load', e => {
     open_reset_all    .start();
     left              .start();
     right             .start();
-	if (get_state('root', 'left') && get_state('root', 'right')) {
+	if (get_state(document.title, 'left') && get_state(document.title, 'right')) {
 		root_left_right.start();
-	} else if (get_state('root', 'left') && !get_state('root', 'right')) {
+	} else if (get_state(document.title, 'left') && !get_state(document.title, 'right')) {
 		root_left_blank.start();
-	} else if (!get_state('root', 'left') && get_state('root', 'right')) {
+	} else if (!get_state(document.title, 'left') && get_state(document.title, 'right')) {
 		root_blank_right.start();
 	} else {
 		root_blank_blank.start();
