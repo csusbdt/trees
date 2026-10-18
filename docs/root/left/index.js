@@ -48,10 +48,10 @@ const fire_gun      = g_touch(i_gun_0);
 
 const on_end_music = e => {
 	clear_touchables();
-    set_state(document.title, "left", true);
+    // set_state(document.title, "left", true);
     pause_opened.stop();
     pause_closing.start();
-    left_opened.start();
+    //left_opened.start();
 };
 
 const music = g_music("say_it_isnt_so.mp3", on_end_music, .4);
@@ -80,8 +80,13 @@ up_closing.starts(g_go_up);
 left_closing.starts(g_go_left);
 right_closing.starts(g_go_right);
 
-play_closing.starts(pause_opening, music);
 pause_closing.stops(music).starts(play_opening);
+
+play_closing.starts(pause_opening, music, _ => {
+    set_state(document.title, "left", true);
+    left_opened.start();
+    start_touchables();
+});
 
 play_opening.starts(play_opened, start_touchables);
 pause_opening.starts(pause_opened, start_touchables);
