@@ -51,10 +51,6 @@ go_up.starts(g_go_up);
 go_left.starts(g_go_left);
 go_right.starts(g_go_right);
 
-going_left.starts(g_go_left); 
-going_right.starts(right_opening);
-right_opening.starts(right_opened, g_go_right);
-
 const can_move_left = _ => {
     if (player.x === 0) return false;
     if (small.x  === 0 && small.y === player.y) return false;
@@ -109,7 +105,6 @@ t01.starts(_ => {
         player.stop();
         set_state("root/right", "left", true);
         going_left.start();
-        return;
     }
     start_touches();
 });
@@ -130,7 +125,6 @@ t02.starts(_ => {
         player.stop();
         set_state("root/right", "right", true);
         going_right.start();
-        return;
     }
     start_touches();
 });
@@ -212,6 +206,20 @@ const start_touches = _ => {
         if (can_move_left()) t02.start();
     } else assert(false);
 };
+
+const reset = _ => {
+    player.x = 0;    
+    player.y = 0;
+    small.x = 0;
+    small.y = 200;
+    big.x = 200;
+    big.y = 400;
+    dirty = true;
+};
+
+going_left.starts(reset, player, left, go_left, start_touches); 
+going_right.starts(right_opening);
+right_opening.starts(reset, player, right_opened, start_touches);
 
 window.addEventListener('load', e => {
     lines.start();
