@@ -25,56 +25,90 @@ const t_Yel         = g_touch(i_Yel_0 );
 const t_cya         = g_touch(i_cya_0 );
 const t_Cya         = g_touch(i_Cya_0 );
 
-t_right.starts(_ => {
-    right.stop();
-    gre.stop();
-    left.start();
-    t_left.start();
-});
-
-t_left.starts(_ => {
-    if (Gre.started()) {
-        Gre.stop();
-        left.stop();
-        right.start();
-        yel.start();
-        gre.start();
-        t_yel.start();
-        t_gre.start();
-        t_right.start();
-    } else {
-        left.stop();
-        right.start();
-        gre.start();
-        t_right.start();
-        t_gre.start();
-    }
-});
+let selected = null;
 
 t_gre.starts(_ => {
+    selected = gre;
     gre.stop();
     gre_moving.start();
 });
 
-gre_moving.starts(_ => {
-    right.stop();
-    left.start();
-    Gre.start();
-    t_left.start();
-    t_Gre.start();
+t_yel.starts(_ => {
+    selected = yel;
+    yel.stop();
+    yel_moving.start();
 });
 
+t_cya.starts(_ => {
+    selected = cya;
+    cya.stop();
+    cya_moving.start();
+});
+
+gre_moving.starts(_ => {
+    if (yel.started()) t_yel.start();
+    if (cya.started()) t_cya.start();
+    t_right.start();
+});
+
+yel_moving.starts(_ => {
+    if (gre.started()) t_gre.start();
+    if (cya.started()) t_cya.start();
+    t_right.start();
+});
+
+cya_moving.starts(_ => {
+    if (gre.started()) t_gre.start();
+    if (yel.started()) t_yel.start();
+    t_right.start();
+});
+
+t_right.starts(_ => {
+    right.stop();
+    left.start();
+    t_left.start();
+    if (selected === gre) {
+        Gre.start();
+        t_Gre.start();
+    } else if (selected === yel) {
+        Yel.start();
+        t_Yel.start();
+    } else if (selected === cya) {
+        Cya.start();
+        t_Cya.start();
+    }
+});
+
+t_left.starts(_ => {
+    left.stop();
+    Gre.stop();
+    Yel.stop();
+    Cya.stop();
+    right.start();
+    gre.start();
+    yel.start();
+    cya.start();
+    t_gre.start();
+    t_yel.start();
+    t_cya.start();
+    t_right.start();
+});
 
 t_Gre.stops(Gre).starts(Gre_going);
-
-
 Gre_going.starts(g_go_up);
-
+t_Yel.stops(Yel).starts(Yel_going);
+Yel_going.starts(g_go_up);
+t_Cya.stops(Cya).starts(Cya_going);
+Cya_going.starts(g_go_up);
 
 window.addEventListener('load', e => {
     get_state(document.title);
     right.start();
     gre.start();
+    yel.start();
+    cya.start();
     t_right.start();
     t_gre.start();
+    t_yel.start();
+    t_cya.start();
 });

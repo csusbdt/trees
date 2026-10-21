@@ -248,6 +248,10 @@ c_frame.prototype.started = function() {
 	return drawables.includes(this);
 };
 
+c_frame.prototype.stopped = function() {
+	return !drawables.includes(this);
+};
+
 c_frame.prototype.stop = function() {
 	remove_drawable(this);
 	return this;
