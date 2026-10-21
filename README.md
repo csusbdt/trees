@@ -28,11 +28,29 @@ To run scripts in power shell:
 
 
 
+Promtp: 
+
+> Powershell command to compute the number of times a file named "index.html" appears in all subdirectories of a given directory
+
+
+
+To count the total number of branches the user can follow, run the following from the project root folder.
+
+\~\~\~
+
+(Get-ChildItem -Path "docs/root" -Filter "index.html" -Recurse -File).Count
+
+\~\~\~
+
+
+
 For console output on iPhone, go to chrome://inspect
 
 
 
 
+
+/\* OLD
 
 0  root
 
@@ -60,9 +78,9 @@ For console output on iPhone, go to chrome://inspect
 
 12 root\_right\_left\_right\_right stub
 
+\*/
 
 
-branches === 12
 
-
+branches === 13
 

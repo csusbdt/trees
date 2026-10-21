@@ -136,7 +136,6 @@ const reset = _ => {
 	reset_2_on.stop();
 	start_arrows();
     start_touchables();
-
 };
 
 t_reset.stops(reset_2_on).starts(reset_closing);
@@ -144,6 +143,7 @@ reset_closing.starts(reset_opening, reset);
 reset_opening.starts(reset_2_off);
 
 window.addEventListener('load', () => {
+	get_state(document.title);
 	up.start();
 	reset_2_off.start();
 	reset();
