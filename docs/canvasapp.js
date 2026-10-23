@@ -275,7 +275,7 @@ window.g_frames = function(images, duration = default_duration, x = 0, y = 0, z_
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_delay(t = default_delay) {
+function c_delay(t) {
 	this.t = t;
 	this.start_set = [];
 	this.stop_set  = [];
@@ -307,7 +307,7 @@ c_delay.prototype.update = function(dt) {
 	}
 };
 
-window.g_delay = function(t) {
+window.g_delay = function(t = default_delay) {
 	return new c_delay(t);
 };
 

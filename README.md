@@ -34,7 +34,9 @@ Promtp:
 
 
 
-To count the total number of branches the user can follow, run the following from the project root folder.
+To count the total number of nodes the user can visit.
+Subtract 1 to get the number of branches to follow.
+
 
 \~\~\~
 
