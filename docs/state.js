@@ -1,11 +1,10 @@
 const initial_state = {
 	pages:   {},
-	version: '4'
+	version: '8'
 };
 initial_state.pages.root = {};
 
 let state = null;
-
 
 window.save_state = () => {
 	localStorage.setItem('trees', JSON.stringify(state));
@@ -19,7 +18,9 @@ if (state_string === null) {
 	if (state.version !== initial_state.version) {
 		state = initial_state;
 		save_state();
-	}	
+		const path_to_root = window.location.pathname.slice(0, window.location.pathname.indexOf("root/"));
+		location.replace(window.location.origin + path_to_root); 
+	}
 }
 
 window.get_state = (page, key) => {
