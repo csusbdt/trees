@@ -1,8 +1,9 @@
 import '../../canvasapp.js';
 
-const border = g_frame(i_border);
-const lines  = g_frame(i_lines );
-const arrows = g_frame(i_arrows);
+const base   = g_frame(i_base);
+// const border = g_frame(i_border);
+// const lines  = g_frame(i_lines );
+// const arrows = g_frame(i_arrows);
 const player = g_frame(i_player);
 const small  = g_frame(i_small, 1/8,   0, 200);
 const big    = g_frame(i_big  , 1/8, 200, 400);
@@ -222,9 +223,10 @@ going_right.starts(right_opening);
 right_opening.starts(reset, player, right_opened, start_touches);
 
 window.addEventListener('load', e => {
-    lines.start();
-    border.start();
-    arrows.start();
+    base.start();
+    // lines.start();
+    // border.start();
+    // arrows.start();
     player.start();
     small.start();
     big.start();
