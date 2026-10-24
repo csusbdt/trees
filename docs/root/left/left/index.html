@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>root/left/left</title>
+    <title>root/left</title>
     <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
     <canvas id="g_canvas" width="1920" height="1080">
 
-    <img id="i_blank"    src="../../../images/blank.png"       />
-    <img id="i_stub_0"   src="../../../images/stub/stub_0.png" />
-    <img id="i_stub_1"   src="../../../images/stub/stub_1.png" />
-    <img id="i_stub_2"   src="../../../images/stub/stub_2.png" />
-    <img id="i_stub_3"   src="../../../images/stub/stub_3.png" />
+    <img id="i_left_0"   src="../../../images/stub/left_0.png" />
+    <img id="i_left_1"   src="../../../images/stub/left_1.png" />
+    <img id="i_left_2"   src="../../../images/stub/left_2.png" />
+    <img id="i_left_3"   src="../../../images/stub/left_3.png" />
     
-    <script type="module" src="./index.js"></script>
+    <script type="module">
+        import '../../../canvasapp.js';
+        const left_closing = g_once(g_frames([ i_left_2, i_left_1, i_left_0 ])).starts(g_go_up);
+        const left         = g_frame(i_left_3)                                  .start();
+        const t_left       = g_touch(i_left_3).stops(left).starts(left_closing) .start();
+        get_state(document.title);
+    </script>
 
 </body>
 </html>
