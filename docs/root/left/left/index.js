@@ -31,9 +31,11 @@ const start_touches = _ => {
 
 t_mouth_on.starts(_ => {
     if (mouth.started()) {
+        set_state(document.title, "mouth", false);
         mouth.stop(); 
         mouth_on.stop(); 
     } else {
+        set_state(document.title, "mouth");
         mouth.start();
         mouth_on.start(); 
     }
@@ -41,10 +43,12 @@ t_mouth_on.starts(_ => {
 
 t_hair_on.starts(_ => {
     if (hair.started()) {
+        set_state(document.title, "hair", false);
         hair.stop(); 
         hair_on.stop(); 
         left.stop(); 
     } else {
+        set_state(document.title, "hair");
         hair.start();
         hair_on.start(); 
         left.start(); 
@@ -53,10 +57,12 @@ t_hair_on.starts(_ => {
 
 t_eyes_on.starts(_ => {
     if (eyes.started()) {
+        set_state(document.title, "eyes", false);
         eyes.stop(); 
         eyes_on.stop(); 
         right.stop(); 
     } else {
+        set_state(document.title, "eyes");
         eyes.start();
         eyes_on.start(); 
         right.start(); 
@@ -67,5 +73,18 @@ t_mouth.starts(g_go_up    );
 t_left .starts(g_go_left  );
 t_right.starts(g_go_right );
 
-get_state(document.title);
+if (get_state(document.title, "mouth")) {
+        mouth.start();
+        mouth_on.start(); 
+}
+if (get_state(document.title, "eyes")) {
+        eyes.start();
+        eyes_on.start(); 
+        right.start(); 
+}
+if (get_state(document.title, "hair")) {
+        hair.start();
+        hair_on.start(); 
+        left.start(); 
+}
 start_touches();
