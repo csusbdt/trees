@@ -9,18 +9,23 @@
 <body>
     <canvas id="g_canvas" width="1920" height="1080">
 
-    <img id="i_left_0"   src="../../../../images/stub/left_0.png" />
-    <img id="i_left_1"   src="../../../../images/stub/left_1.png" />
-    <img id="i_left_2"   src="../../../../images/stub/left_2.png" />
-    <img id="i_left_3"   src="../../../../images/stub/left_3.png" />
+    <img id="i_base"      src="images/base.png"      />        
+    <img id="i_up"        src="images/up.png"        />        
+    <img id="i_left"      src="images/left.png"      />        
+    <img id="i_right"     src="images/right.png"     />        
+    <img id="i_build"     src="images/build.png"     />
+    <img id="i_build_off" src="images/build_off.png" />
+    <img id="i_build_on"  src="images/build_on.png"  />
+    <img id="i_people"    src="images/people.png"    />
+    <img id="i_reset_off" src="images/reset_off.png" />
+    <img id="i_reset_on"  src="images/reset_on.png"  />
+    <img id="i_save_off"  src="images/save_off.png"  />
+    <img id="i_save_on"   src="images/save_on.png"   />
+    <img id="i_smoke_0"   src="images/smoke_0.png"   />
+    <img id="i_smoke_1"   src="images/smoke_1.png"   />
+    <img id="i_smoke_2"   src="images/smoke_2.png"   />
     
-    <script type="module">
-        import '../../../../canvasapp.js';
-        const left_closing = g_once(g_frames([ i_left_2, i_left_1, i_left_0 ])).starts(g_go_up);
-        const left         = g_frame(i_left_3)                                  .start();
-        const t_left       = g_touch(i_left_3).stops(left).starts(left_closing) .start();
-        get_state(document.title);
-    </script>
+    <script type="module" src="index.js"></script>
 
 </body>
 </html>
