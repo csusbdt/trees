@@ -50,16 +50,16 @@ t_reset .stops(left, right, robots, smoke, build_on, save_on  );
 t_build .stops(up  , right, people       , reset_on, save_on  );
 t_save  .stops(up  , left , robots, smoke, reset_on, build_on );
 
-t_reset.starts(up  , people, reset_on        , start_touches);
-t_build.starts(left, robots, smoke, build_on , start_touches);
-t_save.starts(right, people, save_on         , start_touches);
+t_reset.starts(up  , people,        reset_on, build_off, save_off , start_touches);
+t_build.starts(left, robots, smoke, build_on, reset_off, save_off , start_touches);
+t_save.starts(right, people,        save_on , reset_off, build_off, start_touches);
 
-if (get_state(document.title, "selected") === "reset") {
-    up.start();
+if (get_state(document.title, "selected") === "save") {
+    right.start();
     people.start();
-    reset_on.start();
+    reset_off.start();
     build_off.start();
-    save_off.start();
+    save_on.start();
 } else if (get_state(document.title, "selected") === "build") {
     left.start();
     robots.start();
@@ -68,12 +68,12 @@ if (get_state(document.title, "selected") === "reset") {
     build_on.start();
     save_off.start();
 } else {
-    set_state(document.title, "selected", "save");
-    right.start();
+    set_state(document.title, "selected", "reset");
+    up.start();
     people.start();
-    reset_off.start();
+    reset_on.start();
     build_off.start();
-    save_on.start();
+    save_off.start();
 }
 
 start_touches();
