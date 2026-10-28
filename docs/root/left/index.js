@@ -54,7 +54,7 @@ const on_end_music = e => {
     //left_opened.start();
 };
 
-const music = g_music("say_it_isnt_so.mp3", on_end_music, .4);
+const music = g_music("say_it_isnt_so.mp3", on_end_music, 1);
 
 // helpers
 

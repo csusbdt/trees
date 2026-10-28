@@ -40,7 +40,7 @@ const on_end_music = e => {
     start_touches();
 };
 
-const music = g_music("Washington_Post_1924.mp3", on_end_music, .4, 3);
+const music = g_music("Washington_Post_1924.mp3", on_end_music, 1, 3);
 
 const start_touches = _ => {
     if (kg_opened.started()) {
