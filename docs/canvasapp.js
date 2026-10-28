@@ -422,20 +422,33 @@ c_loop.prototype.set_dy = function(dy) {
 }
 
 c_loop.prototype.start = function() {
-	this.elapsed_time = 0;
 	add_drawable(this);
 	add_updatable(this);
 	return this;
 };
 
+c_loop.prototype.pause = function() {
+	remove_updatable(this);
+	return this;
+};
+
 c_loop.prototype.stop = function() {
+	this.elapsed_time = 0;
 	remove_drawable(this);
 	remove_updatable(this);
 	return this;
 };
 
+c_loop.prototype.paused = function() {
+	return drawables.includes(this) && !updatables.includes(this);
+};
+
 c_loop.prototype.started = function() {
-	return drawables.includes(this);
+	return drawables.includes(this)&& updatables.includes(this);
+};
+
+c_loop.prototype.stopped = function() {
+	return !drawables.includes(this) && !updatables.includes(this);
 };
 
 c_loop.prototype.draw = function(ctx) {
