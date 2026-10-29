@@ -62,6 +62,11 @@ window.g_go_right = _ => {
 	g_delay().starts(() => location.replace('./right/')).start();
 };
 
+window.g_reload = _ => {
+	clear_touchables();
+	g_delay().starts(() => window.location.reload()).start();
+};
+
 function stop_stop_sets(...stop_sets) {
 	stop_sets.forEach(stop_set => {
 		stop_set.forEach(o => {
