@@ -6,6 +6,8 @@ import "../../music.js";
 const ship_dur   = 4/8;
 const blob_dur   = 1/8;
 
+const played        = g_frame(i_played);
+
 // loops
 
 const up_opened     = g_loop(g_frames(i_up_2));
@@ -48,10 +50,10 @@ const fire_gun      = g_touch(i_gun_0);
 
 const on_end_music = e => {
 	clear_touchables();
-    // set_state(document.title, "left", true);
+    set_state(document.title, "played", true);
     pause_opened.stop();
     pause_closing.start();
-    //left_opened.start();
+    played.start();
 };
 
 const music = g_music("say_it_isnt_so.mp3", on_end_music, 1);
@@ -140,6 +142,9 @@ window.addEventListener('load', e => {
     play_opened.start();
     ship.start();
     gun.start();
+    if (get_state(document.title, "played")) {
+        played.start();
+    }
     if (get_state(document.title, "left")) {
         left_opened.start();
         go_left.start();
