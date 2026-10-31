@@ -1,6 +1,6 @@
 const initial_state = {
 	pages:   {},
-	version: '11'
+	version: '12'
 };
 initial_state.pages.root = {};
 
