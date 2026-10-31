@@ -101,7 +101,7 @@ t_go.starts(_ => {
         else if (RB    .started()) g_reload();
         else if (GB    .started()) g_reload();
         else if (RGB   .started()) g_reload();
-        else assert(false);
+        else g_reload();
     }
 });
 
