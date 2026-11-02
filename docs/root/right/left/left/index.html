@@ -9,18 +9,34 @@
 <body>
     <canvas id="g_canvas" width="1920" height="1080">
 
-    <img id="i_left_0"   src="../../../../images/stub/left_0.png" />
-    <img id="i_left_1"   src="../../../../images/stub/left_1.png" />
-    <img id="i_left_2"   src="../../../../images/stub/left_2.png" />
-    <img id="i_left_3"   src="../../../../images/stub/left_3.png" />
+    <img id="i_base"     src="images/base.png"    />
+    <img id="i_up"       src="images/up.png"      />
+    <img id="i_left"     src="images/left.png"    />
+    <img id="i_right"    src="images/right.png"   />
+    <img id="i_reset"    src="images/reset.png"   />
+    <img id="i_red_0"    src="images/red_0.png"   />
+    <img id="i_red_1"    src="images/red_1.png"   />
+    <img id="i_red_2"    src="images/red_2.png"   />
+    <img id="i_red_3"    src="images/red_3.png"   />
+    <img id="i_red_4"    src="images/red_4.png"   />
+    <img id="i_green_0"  src="images/green_0.png" />
+    <img id="i_green_1"  src="images/green_1.png" />
+    <img id="i_green_2"  src="images/green_2.png" />
+    <img id="i_green_3"  src="images/green_3.png" />
+    <img id="i_green_4"  src="images/green_4.png" />
+    <img id="i_blue_0"   src="images/blue_0.png"  />
+    <img id="i_blue_1"   src="images/blue_1.png"  />
+    <img id="i_blue_2"   src="images/blue_2.png"  />
+    <img id="i_blue_3"   src="images/blue_3.png"  />
+    <img id="i_blue_4"   src="images/blue_4.png"  />
+    <img id="i_cyan"     src="images/cyan.png"    />
+    <img id="i_cyan_0"   src="images/cyan_0.png"  />
+    <img id="i_cyan_1"   src="images/cyan_1.png"  />
+    <img id="i_cyan_2"   src="images/cyan_2.png"  />
+    <img id="i_cyan_3"   src="images/cyan_3.png"  />
+    <img id="i_cyan_4"   src="images/cyan_4.png"  />
     
-    <script type="module">
-        import '../../../../canvasapp.js';
-        const left_closing = g_once(g_frames([ i_left_2, i_left_1, i_left_0 ])).starts(g_go_up);
-        const left         = g_frame(i_left_3)                                  .start();
-        const t_left       = g_touch(i_left_3).stops(left).starts(left_closing) .start();
-        get_state(document.title);
-    </script>
+    <script type="module" src="index.js"></script>
 
 </body>
 </html>

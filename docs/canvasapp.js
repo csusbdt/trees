@@ -560,6 +560,12 @@ window.g_touch = function(shapes, dx = 0, dy = 0) {
 	}
 };
 
+window.g_touches = function(images, dx = 0, dy = 0) {
+	if (!Array.isArray(images)) images = [images];
+	return images.map(image => new c_touch([ image ], dx, dy));
+};
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // input
