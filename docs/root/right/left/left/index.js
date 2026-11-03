@@ -150,8 +150,8 @@ t_cyan[2].starts(_ => {
     cyan[2].stop();
     if (v3()) cyan[3].start(); else cyan[4].start();
     if (cyan[3].started() && cyan[4].started()) {
-        set_state(document.title, "noop");
-        noop.start();
+       set_state(document.title, "noop");
+       noop.start();
     }
     start_touches();
 });
