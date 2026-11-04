@@ -9,19 +9,30 @@
 <body>
     <canvas id="g_canvas" width="1920" height="1080">
 
-    <img id="i_blank"    src="../../../../images/blank.png"       />
-    <img id="i_left_0"   src="../../../../images/stub/left_0.png" />
-    <img id="i_left_1"   src="../../../../images/stub/left_1.png" />
-    <img id="i_left_2"   src="../../../../images/stub/left_2.png" />
-    <img id="i_left_3"   src="../../../../images/stub/left_3.png" />
+    <img id="i_blank"      src="../../../../../images/blank.png" />
+    <img id="i_base_0"     src="images/base_0.png"   />
+    <img id="i_base_1"     src="images/base_1.png"   />
+    <img id="i_base_2"     src="images/base_2.png"   />
+    <img id="i_red_0"      src="images/red_0.png"    />
+    <img id="i_red_1"      src="images/red_1.png"    />
+    <img id="i_red_2"      src="images/red_2.png"    />
+    <img id="i_green_0"    src="images/green_0.png"  />
+    <img id="i_green_1"    src="images/green_1.png"  />
+    <img id="i_green_2"    src="images/green_2.png"  />
+    <img id="i_blue_0"     src="images/blue_0.png"   />
+    <img id="i_blue_1"     src="images/blue_1.png"   />
+    <img id="i_blue_2"     src="images/blue_2.png"   />
+    <img id="i_g0"         src="images/g0.png"       />
+    <img id="i_g1"         src="images/g1.png"       />
+    <img id="i_g2"         src="images/g2.png"       />
+    <img id="i_r0"         src="images/r0.png"       />
+    <img id="i_r1"         src="images/r1.png"       />
+    <img id="i_r2"         src="images/r2.png"       />
+    <img id="i_b0"         src="images/b0.png"       />
+    <img id="i_b1"         src="images/b1.png"       />
+    <img id="i_b2"         src="images/b2.png"       />
     
-    <script type="module">
-        import '../../../../canvasapp.js';
-        const left_closing = g_once(g_frames([ i_left_2, i_left_1, i_left_0 ])).starts(g_go_up);
-        const left         = g_frame(i_left_3)                                  .start();
-        const t_left       = g_touch(i_left_3).stops(left).starts(left_closing) .start();
-        get_state(document.title);
-    </script>
+    <script type="module" src="index.js"></script>
 
 </body>
 </html>

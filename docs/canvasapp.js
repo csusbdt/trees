@@ -243,6 +243,11 @@ c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
 		this.image.height * this.s);
 };
 
+c_frame.prototype.set_z = function(z) {
+	this.z_index = z;
+	return this;
+};
+
 c_frame.prototype.start = function() {
 	add_drawable(this);
 	dirty = true;

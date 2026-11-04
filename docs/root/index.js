@@ -1,6 +1,6 @@
 import '../canvasapp.js';
 
-const num_branches         = 24;
+const num_branches         = 26;
 const num_visited          = Object.keys(get_state().pages).length - 1;
 const num_not_visited      = num_branches - num_visited;
 
