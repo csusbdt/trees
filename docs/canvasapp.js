@@ -48,16 +48,19 @@ window.g_url = path => {
 };
 
 window.g_go_up = t => {
+	set_state(document.title, "up");
 	clear_touchables();
 	g_delay(t).starts(() => location.replace('../'     )).start();
 };
 
 window.g_go_left = _ => {
+	set_state(document.title, "left");
 	clear_touchables();
 	g_delay().starts(() => location.replace('./left/' )).start();
 };
 
 window.g_go_right = _ => {
+	set_state(document.title, "right");
 	clear_touchables();
 	g_delay().starts(() => location.replace('./right/')).start();
 };
@@ -213,34 +216,29 @@ window.g_rect = function(left, top, right, bottom) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_frame(image, duration = default_duration, x = 0, y = 0, z_index = default_z, s = 1) {
-	this.image = image;
-	if (duration === null) {
-		this.duration = default_duration;
-	} else {
-		this.duration = duration;
-	}
+function c_frame(images, duration = default_duration, x = 0, y = 0, z_index = default_z, s = 1) {
+	this.images = Array.isArray(images) ? images : [images];
+	this.duration = duration === null ? default_duration : duration;
 	this.x = x;
 	this.y = y;
-	if (z_index === null) {
-		this.z_index = default_z;
-	} else {
-		this.z_index = z_index;
-	}
+	this.z_index = z_index === null ? default_z : z_index;
 	this.s = s;
 }
 
 c_frame.prototype.draw = function(ctx, dx = 0, dy = 0) {
-	ctx.drawImage(
-		this.image, 
-		0, 
-		0, 
-		this.image.width, 
-		this.image.height, 
-		this.x + dx, 
-		this.y + dy, 
-		this.image.width * this.s, 
-		this.image.height * this.s);
+	this.images.forEach(image => {
+		ctx.drawImage(
+			image, 
+			0, 
+			0, 
+			image.width, 
+			image.height, 
+			this.x + dx, 
+			this.y + dy, 
+			image.width * this.s, 
+			image.height * this.s
+		);
+	});
 };
 
 c_frame.prototype.set_z = function(z) {

@@ -27,6 +27,10 @@ window.get_state = (page, key) => {
 	if (page === undefined) {
 		return state;
 	}
+	if (page !== (document.title)) {
+		key = page;
+		page = document.title;
+	}
 	if (!(page in state.pages)) {
 		set_state(page);
 	}
@@ -42,6 +46,11 @@ window.get_state = (page, key) => {
 window.set_state = (page, key, value) => {
 	if (page === undefined) {
 		throw new Error('set_state called without page');
+	}
+	if (page !== (document.title)) {
+		value = key;
+		key = page;
+		page = document.title;
 	}
 	if (!(page in state.pages)) {
 		state.pages[page] = {};

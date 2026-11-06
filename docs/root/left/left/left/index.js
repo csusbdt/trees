@@ -4,7 +4,7 @@ const base       = g_frame(i_base      ).start();
 const up         = g_frame(i_up        );
 const left       = g_frame(i_left      );
 const right      = g_frame(i_right     );
-const people     = g_frame(i_people    );
+let   people     = null;
 const robots     = g_frame(i_build     );
 const reset_on   = g_frame(i_reset_on  );
 const build_on   = g_frame(i_build_on  );
@@ -12,6 +12,16 @@ const save_on    = g_frame(i_save_on   );
 const reset_off  = g_frame(i_reset_off );
 const build_off  = g_frame(i_build_off );
 const save_off   = g_frame(i_save_off  );
+
+if (get_state("right") && get_state("left")) {
+    people = g_frame([ i_people, i_right_b, i_left_b ]);
+} else if (get_state("right")) {
+    people = g_frame([ i_people, i_right_b ]);
+} else if (get_state("left")) {
+    people = g_frame([ i_people, i_left_b ]);
+} else {
+    people = g_frame([ i_people ]);
+}
 
 const smoke      = g_loop(g_frames([i_smoke_0, i_smoke_1, i_smoke_2 ]));
 
@@ -21,6 +31,8 @@ const t_right    = g_touch(i_right     );
 const t_reset    = g_touch(i_reset_off );
 const t_build    = g_touch(i_build_off );
 const t_save     = g_touch(i_save_off  );
+const t_right_b  = g_touch(i_right_bt  );
+const t_left_b   = g_touch(i_left_bt   );
 
 const start_touches = _ => {
     if (reset_on.started()) {
@@ -28,6 +40,8 @@ const start_touches = _ => {
         t_up.start();
         t_build.start();
         t_save.start();
+        if (get_state("right")) t_right_b.start();
+        if (get_state("left")) t_left_b.start();
     } else if (build_on.started()) {
         set_state(document.title, "selected", "build");
         t_left.start();
@@ -39,12 +53,16 @@ const start_touches = _ => {
         t_right.start();
         t_build.start();
         t_reset.start();
+        if (get_state("right")) t_right_b.start();
+        if (get_state("left")) t_left_b.start();
     }
 };
 
-t_up    .starts(g_go_up    );
-t_left  .starts(g_go_left  );
-t_right .starts(g_go_right );
+t_up     .starts(g_go_up    );
+t_left   .starts(g_go_left  );
+t_right  .starts(g_go_right );
+t_left_b .starts(g_go_left  );
+t_right_b.starts(g_go_right );
 
 t_reset .stops(left, right, robots, smoke, build_on, save_on  );
 t_build .stops(up  , right, people       , reset_on, save_on  );
