@@ -164,54 +164,6 @@ window.g_click_test = (images, p) => {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// circle
-//
-///////////////////////////////////////////////////////////////////////////////
-
-function c_circle(x, y, r) {
-	this.x = x;
-	this.y = y;
-	this.r = r;
-}
-
-c_circle.prototype.inside = function(x, y) {
-	return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) < this.r * this.r;
-};
-
-window.g_circle = function(x, y, r) {
-	return new c_circle(x, y, r);
-};
-
-///////////////////////////////////////////////////////////////////////////////
-//
-// rect
-//
-///////////////////////////////////////////////////////////////////////////////
-
-function c_rect(left, top, right, bottom) {
-	this.left = left;
-	this.top = top;
-	this.right = right;
-	this.bottom = bottom;
-}
-
-c_rect.prototype.inside = function(x, y) {
-	return x >= this.left && x < this.right && y >= this.top && y < this.bottom;
-};
-
-c_rect.prototype.center = function() {
-	return { 
-		x: (this.left + this.right) / 2, 
-		y: (this.top + this.bottom) / 2 
-	};
-};
-
-window.g_rect = function(left, top, right, bottom) {
-	return new c_rect(left, top, right, bottom);
-};
-
-///////////////////////////////////////////////////////////////////////////////
-//
 // frame
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -497,8 +449,8 @@ window.g_loop = function(frames, z_index = default_z, dx = 0, dy = 0) {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-function c_touch(shapes, dx, dy) {
-	this.shapes       = shapes;
+function c_touch(images, dx, dy) {
+	this.images       = images;
 	this.dx           = dx;
 	this.dy           = dy;
 	this.start_set    = [];
@@ -536,16 +488,10 @@ c_touch.prototype.stop = function() {
 // }
 
 c_touch.prototype.touch = function(p) {
-	for (let i = 0; i < this.shapes.length; ++i) {
-		const shape = this.shapes[i];
-		if (shape instanceof HTMLImageElement || shape instanceof c_frame) {
-			if (g_click_test(this.shapes[i], p)) {
-				clear_touchables();
-				stop_stop_sets(this.stop_set);
-				start_start_sets(this.start_set);
-				return true;
-			}
-		} else if (shape.inside(p.x - this.dx, p.y - this.dy)) {
+	for (let i = 0; i < this.images.length; ++i) {
+		const image = this.images[i];
+		assert(!(image instanceof c_frame));
+		if (g_click_test(this.images[i], p)) {
 			clear_touchables();
 			stop_stop_sets(this.stop_set);
 			start_start_sets(this.start_set);
@@ -555,11 +501,11 @@ c_touch.prototype.touch = function(p) {
 	return false;
 };
 
-window.g_touch = function(shapes, dx = 0, dy = 0) {
-	if (Array.isArray(shapes)) {
-		return new c_touch(shapes, dx, dy);
+window.g_touch = function(images, dx = 0, dy = 0) {
+	if (Array.isArray(images)) {
+		return new c_touch(images, dx, dy);
 	} else {
-		return new c_touch([shapes], dx, dy);
+		return new c_touch([images], dx, dy);
 	}
 };
 
@@ -597,39 +543,7 @@ const pointerup = e => {
 	on_touch(canvas_coords(e));
 };
 
-// const mousemove = e => {
-// 	e.preventDefault();
-// 	e.stopImmediatePropagation();
-// 	g_canvas.style.cursor = 'default';
-// };
-
-// const mousedown = e => {
-// 	e.preventDefault();
-// 	e.stopImmediatePropagation();
-// 	g_canvas.style.cursor = 'default';
-// 	on_touch(canvas_coords(e));
-// };
-
-// the following touchend and touchmove code needed for fullscreen on chrome
-// see: https://stackoverflow.com/questions/42945378/full-screen-event-on-touch-not-working-on-chrome/42948120
-
-// const touchend = e => {
-// 	e.preventDefault();
-// 	e.stopImmediatePropagation();
-// 	g_canvas.style.cursor = 'none';
-// 	on_touch(canvas_coords(e.changedTouches[0]));
-// };
-
-// const touchmove = e => {
-// 	e.preventDefault();
-// };
-
 window.addEventListener('pointerup', pointerup, true);
-// window.addEventListener('mousemove', mousemove, true);
-// window.addEventListener('mousedown', mousedown, true); 
-// window.addEventListener('touchend' , touchend , true); 
-// window.addEventListener('touchmove', touchmove, { passive: false }); 
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //

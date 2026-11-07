@@ -24,9 +24,9 @@ const reset_opening        = g_once(g_frames(i_reset_1)       );
 const ok_reset_closing     = g_once(g_frames(i_reset_1)       );
 const cancel_reset_closing = g_once(g_frames(i_reset_1)       );
 
-const t_open_reset         = g_touch(g_circle(1905,  46, 100 ));
-const t_ok_reset           = g_touch(g_circle(1405, 308, 194 ));
-const t_cancel_reset       = g_touch(g_circle(1505, 756, 151 ));
+const t_open_reset         = g_touch(i_reset_0                );
+const t_ok_reset           = g_touch(i_reset_ok               );
+const t_cancel_reset       = g_touch(i_reset_cancel           );
 const t_open_visited       = g_touch(i_visited_0              );
 const t_close_visited      = g_touch(i_visited_2              );
 const t_left               = g_touch(i_left                   );

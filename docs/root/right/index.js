@@ -25,12 +25,12 @@ const go_right = g_touch(i_right_6 );
 // | t02 | t12 |
 // +-----+-----+
 
-const t00 = g_touch(g_rect(760 +   0, 220 +   0,  960 +   0, 420 +   0));
-const t01 = g_touch(g_rect(760 +   0, 220 + 200,  960 +   0, 420 + 200));
-const t02 = g_touch(g_rect(760 +   0, 220 + 400,  960 +   0, 420 + 400));
-const t10 = g_touch(g_rect(760 + 200, 220 +   0,  960 + 200, 420 +   0));
-const t11 = g_touch(g_rect(760 + 200, 220 + 200,  760 + 400, 220 + 400));
-const t12 = g_touch(g_rect(760 + 200, 220 + 400,  960 + 200, 420 + 400));
+const t00 = g_touch(i_t00);
+const t01 = g_touch(i_t01);
+const t02 = g_touch(i_t02);
+const t10 = g_touch(i_t10);
+const t11 = g_touch(i_t11);
+const t12 = g_touch(i_t12);
 
 const going_left = g_once([
     g_frame(i_player, 3/8,    0, 200), 

@@ -39,7 +39,7 @@ const blob_3        = g_once(g_frames([ i_blob_3_0, i_blob_3_1, i_blob_3_2, i_bl
 
 // touches
 
-const go_up         = g_touch(g_circle(963, 276, 56));
+const go_up         = g_touch(i_up_2);
 const go_left       = g_touch(i_left_2);
 const go_right      = g_touch(i_right_2);
 const play_music    = g_touch(i_play_music_2);
