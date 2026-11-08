@@ -12,15 +12,15 @@ const green_2  = g_frame(i_green_2);
 const blue_0   = g_frame(i_blue_0 ).set_z(9);
 const blue_1   = g_frame(i_blue_1 );
 const blue_2   = g_frame(i_blue_2 );
-const r0       = (get_state(document.title, "right") ? g_frame(i_r0b) : g_frame(i_r0)).start();
+const r0       = (get_state("right") ? g_frame(i_r0b) : g_frame(i_r0)).start();
 const r1       = g_frame(i_r1     );
-const r2       = (get_state(document.title, "right") ? g_frame(i_r2b) : g_frame(i_r2));
-const g0       = (get_state(document.title, "up") ? g_frame(i_g0b) : g_frame(i_g0));
+const r2       = (get_state("right") ? g_frame(i_r2b) : g_frame(i_r2));
+const g0       = (get_state("up") ? g_frame(i_g0b) : g_frame(i_g0));
 const g1       = g_frame(i_g1     );
-const g2       = (get_state(document.title, "up") ? g_frame(i_g2b) : g_frame(i_g2));
-const b0       = (get_state(document.title, "left") ? g_frame(i_b0b) : g_frame(i_b0)).start();
+const g2       = (get_state("up") ? g_frame(i_g2b) : g_frame(i_g2));
+const b0       = (get_state("left") ? g_frame(i_b0b) : g_frame(i_b0)).start();
 const b1       = g_frame(i_b1     );
-const b2       = (get_state(document.title, "left") ? g_frame(i_b2b) : g_frame(i_b2));
+const b2       = (get_state("left") ? g_frame(i_b2b) : g_frame(i_b2));
 const r0b      = g_frame(i_r0b    );
 const g0b      = g_frame(i_g0b    );
 const b0b      = g_frame(i_b0b    );
@@ -56,15 +56,15 @@ o_g.starts(g2, start_touches);
 o_b.starts(b2, start_touches);
 
 t_red.starts(_ => {
-    set_state(document.title, "right");
+    set_state("right");
     g_go_right();
 });
 t_green.starts(_ => {
-    set_state(document.title, "up");
+    set_state("up");
     g_go_up();
 });
 t_blue.starts(_ => {
-    set_state(document.title, "left");
+    set_state("left");
     g_go_left();
 });
 
@@ -77,4 +77,5 @@ t_g2.stops(r2, g2, b2, red_0, blue_0).starts(green_0, r0, b0, start_touches);
 t_b0.stops(b0).starts(o_b);
 t_b2.stops(r2, g2, b2, red_0, green_0).starts(blue_0, r0, g0, start_touches);
 
+set_state();
 start_touches();

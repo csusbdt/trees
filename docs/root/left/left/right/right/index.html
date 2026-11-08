@@ -19,7 +19,7 @@
         const right_closing = g_once(g_frames([ i_right_2, i_right_1, i_right_0 ])) .starts(g_go_up);
         const right         = g_frame(i_right_3)                                    .start();
         const t_right       = g_touch(i_right_3).stops(right).starts(right_closing) .start();
-        get_state(document.title);
+        set_state();
     </script>
 
 </body>

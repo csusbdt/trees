@@ -14,8 +14,8 @@ const t_left        = g_touch(i_left    );
 const t_right       = g_touch(i_right   );
 const t_reset       = g_touch(i_reset_2 );
 
-t_left .starts(g_go_left , _ => set_state(document.title, "left"  ));
-t_right.starts(g_go_right, _ => set_state(document.title, "right" ));
+t_left .starts(g_go_left , _ => set_state("left"  ));
+t_right.starts(g_go_right, _ => set_state("right" ));
 
 let s = [2, 2, 2, 0, 1, 1, 1];
 
@@ -116,7 +116,7 @@ reset_closing.starts(_ => {
     start_touchables();
 });
 
-if (get_state(document.title, "left" )) left .start();
-if (get_state(document.title, "right")) right.start();
+if (get_state("left" )) left .start();
+if (get_state("right")) right.start();
 update();
 start_touchables();

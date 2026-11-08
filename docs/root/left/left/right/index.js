@@ -67,9 +67,9 @@ t_up.starts(g_go_up);
 t_left.starts(g_go_left);
 t_right.starts(g_go_right);
 t_beam_on.stops(beam_off, start_touches).starts(beam_on, beam, start_touches);
-t_beam_on.starts(_ => set_state(document.title, "beam", true));
+t_beam_on.starts(_ => set_state("beam", true));
 t_beam_off.stops(beam_on, beam, start_touches).starts(beam_off, start_touches);
-t_beam_off.starts(_ => set_state(document.title, "beam", false));
+t_beam_off.starts(_ => set_state("beam", false));
 t_red_die.stops(red).starts(red_dying);
 t_green_die.stops(green).starts(green_dying);
 t_blue_die.stops(blue).starts(blue_dying);
@@ -82,9 +82,9 @@ t_go.starts(_ => {
         if      (red   .started()) { red.stop(); red_dying_chained.start(); }
         else if (green .started()) { green.stop(); green_dying_chained.start(); }
         else if (blue  .started()) { blue.stop(); blue_dying_chained.start(); }
-        else if (R     .started()) { set_state(document.title, "right", true); g_go_right(); }
-        else if (G     .started()) { set_state(document.title, "up"   , true); g_go_up   (); }
-        else if (B     .started()) { set_state(document.title, "left" , true); g_go_left (); }
+        else if (R     .started()) { set_state("right", true); g_go_right(); }
+        else if (G     .started()) { set_state("up"   , true); g_go_up   (); }
+        else if (B     .started()) { set_state("left" , true); g_go_left (); }
         else if (RG    .started()) g_reload();
         else if (RB    .started()) g_reload();
         else if (GB    .started()) g_reload();
@@ -94,9 +94,9 @@ t_go.starts(_ => {
         if      (red   .started()) { red.stop(); red_merging.start(); }
         else if (green .started()) { green.stop(); green_merging.start(); }
         else if (blue  .started()) { blue.stop(); blue_merging.start(); }
-        else if (R     .started()) { set_state(document.title, "right", true); g_go_right(); }
-        else if (G     .started()) { set_state(document.title, "up"   , true); g_go_up   (); }
-        else if (B     .started()) { set_state(document.title, "left" , true); g_go_left (); }
+        else if (R     .started()) { set_state("right", true); g_go_right(); }
+        else if (G     .started()) { set_state("up"   , true); g_go_up   (); }
+        else if (B     .started()) { set_state("left" , true); g_go_left (); }
         else if (RG    .started()) g_reload();
         else if (RB    .started()) g_reload();
         else if (GB    .started()) g_reload();
@@ -181,8 +181,8 @@ blue_merging.starts(_ => {
     else start_touches();
 });
 
-if (get_state(document.title, "up"   )) up    .start();
-if (get_state(document.title, "left" )) left  .start();
-if (get_state(document.title, "right")) right .start();
+if (get_state("up"   )) up    .start();
+if (get_state("left" )) left  .start();
+if (get_state("right")) right .start();
 
 start_touches();

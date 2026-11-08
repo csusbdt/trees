@@ -10,4 +10,4 @@ const go_up     = g_touch(i_green  ).starts (g_go_up    ).start();
 const go_left   = g_touch(i_blue   ).starts (g_go_left  ).start();
 const go_right  = g_touch(i_red_t  ).starts (g_go_right ).start();
 
-get_state(document.title);
+set_state();

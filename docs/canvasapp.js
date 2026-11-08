@@ -39,28 +39,30 @@ window.g_log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
-window.g_url = path => {
-	if (window.location.pathname.startsWith('/trees')) {
-		return "/trees" + path;
-	} else {
-		return path;
-	}
-};
+//window.g_path = window.location.pathname.slice(window.location.pathname.indexOf('/root'));
+
+// window.g_url = path => {
+// 	if (window.location.pathname.startsWith('/trees')) {
+// 		return "/trees" + path;
+// 	} else {
+// 		return path;
+// 	}
+// };
 
 window.g_go_up = t => {
-	set_state(document.title, "up");
+	set_state("up");
 	clear_touchables();
 	g_delay(t).starts(() => location.replace('../'     )).start();
 };
 
 window.g_go_left = _ => {
-	set_state(document.title, "left");
+	set_state("left");
 	clear_touchables();
 	g_delay().starts(() => location.replace('./left/' )).start();
 };
 
 window.g_go_right = _ => {
-	set_state(document.title, "right");
+	set_state("right");
 	clear_touchables();
 	g_delay().starts(() => location.replace('./right/')).start();
 };

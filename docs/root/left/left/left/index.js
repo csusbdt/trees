@@ -36,20 +36,20 @@ const t_left_b   = g_touch(i_left_bt   );
 
 const start_touches = _ => {
     if (reset_on.started()) {
-        set_state(document.title, "selected", "reset");
+        set_state("selected", "reset");
         t_up.start();
         t_build.start();
         t_save.start();
         if (get_state("right")) t_right_b.start();
         if (get_state("left")) t_left_b.start();
     } else if (build_on.started()) {
-        set_state(document.title, "selected", "build");
+        set_state("selected", "build");
         t_left.start();
         t_reset.start();
         t_save.start();
     } else {
         assert(save_on.started());
-        set_state(document.title, "selected", "save");
+        set_state("selected", "save");
         t_right.start();
         t_build.start();
         t_reset.start();
@@ -72,13 +72,13 @@ t_reset.starts(up  , people,        reset_on, build_off, save_off , start_touche
 t_build.starts(left, robots, smoke, build_on, reset_off, save_off , start_touches);
 t_save.starts(right, people,        save_on , reset_off, build_off, start_touches);
 
-if (get_state(document.title, "selected") === "save") {
+if (get_state("selected") === "save") {
     right.start();
     people.start();
     reset_off.start();
     build_off.start();
     save_on.start();
-} else if (get_state(document.title, "selected") === "build") {
+} else if (get_state("selected") === "build") {
     left.start();
     robots.start();
     smoke.start();
@@ -86,7 +86,7 @@ if (get_state(document.title, "selected") === "save") {
     build_on.start();
     save_off.start();
 } else {
-    set_state(document.title, "selected", "reset");
+    set_state("selected", "reset");
     up.start();
     people.start();
     reset_on.start();

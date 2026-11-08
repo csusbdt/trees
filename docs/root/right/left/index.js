@@ -101,14 +101,12 @@ Yel_going.starts(g_go_right);
 t_Cya.stops(Cya).starts(Cya_going);
 Cya_going.starts(g_go_left);
 
-window.addEventListener('load', e => {
-    get_state(document.title);
-    right.start();
-    gre.start();
-    yel.start();
-    cya.start();
-    t_right.start();
-    t_gre.start();
-    t_yel.start();
-    t_cya.start();
-});
+save_state();
+right.start();
+gre.start();
+yel.start();
+cya.start();
+t_right.start();
+t_gre.start();
+t_yel.start();
+t_cya.start();

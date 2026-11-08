@@ -74,31 +74,31 @@ t_open_visited  .starts(visited_opening                                         
 t_close_visited .starts(visited_closing                                             );
 
 t_left.starts(() => {
-	set_state(document.title, 'left', true);
+	set_state('left');
 	left.start();
 	g_go_left();
 });
 
 t_right.starts(() => {
-	set_state(document.title, 'right', true);
+	set_state('right');
 	right.start();
 	g_go_right();
 });
 
-window.addEventListener('load', e => {
+//window.addEventListener('load', e => {
 	reset_closed      .start();
 	visited_closed    .start();
 	visited_0         .start();
 	not_visited_0     .start();
     root              .start();
-	if (get_state(document.title, 'left')) {
+	if (get_state('left')) {
 		left.start();
 	} 
-	if (get_state(document.title, 'right')) {
+	if (get_state('right')) {
 		right.start();
 	}
 	if (num_not_visited === 0) {
 		complete.start();
 	}	
 	start_touches();	
-});
+//});

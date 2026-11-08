@@ -1,76 +1,57 @@
+const path_to_root = window.location.pathname.slice(0, window.location.pathname.indexOf("root/"));
+
 const initial_state = {
-	pages:   {},
-	version: '12'
+	pages: {},
+	version: '13'
 };
-initial_state.pages.root = {};
+initial_state.pages[path_to_root + "root/"] = {};
 
 let state = null;
 
-window.save_state = () => {
-	localStorage.setItem('trees', JSON.stringify(state));
+window.save_state = _ => {
+	if (!(window.location.pathname in state.pages)) {
+		state.pages[window.location.pathname] = {};
+	}
+	localStorage.setItem('tree', JSON.stringify(state));
 };
 
-let state_string = localStorage.getItem('trees');
+let state_string = localStorage.getItem('tree');
 if (state_string === null) {
-	state = initial_state;
+	state = structuredClone(initial_state);
 } else {
 	state = JSON.parse(state_string);
 	if (state.version !== initial_state.version) {
-		state = initial_state;
-		save_state();
-		const path_to_root = window.location.pathname.slice(0, window.location.pathname.indexOf("root/"));
+		state = structuredClone(initial_state);
+		save_state();		
 		location.replace(window.location.origin + path_to_root); 
 	}
 }
 
-window.get_state = (page, key) => {
-	if (page === undefined) {
+window.get_state = (key) => {
+	if (key === undefined) {
+		save_state();
 		return state;
 	}
-	if (page !== (document.title)) {
-		key = page;
-		page = document.title;
+	if (!(window.location.pathname in state.pages)) {
+		state.pages[window.location.pathname] = {};
 	}
-	if (!(page in state.pages)) {
-		set_state(page);
+	if (!(key in state.pages[window.location.pathname])) {
+		set_state(key, null);
 	}
+	return state.pages[window.location.pathname][key];
+};
+
+window.set_state = (key, value) => {
 	if (key === undefined) {
-		return state.pages[page];
+		save_state();
+		return;
 	}
-	if (!(key in state.pages[page])) {
-		set_state(page, key, null);
-	}
-	return state.pages[page][key];
-};
-
-window.set_state = (page, key, value) => {
-	if (page === undefined) {
-		throw new Error('set_state called without page');
-	}
-	if (page !== (document.title)) {
-		value = key;
-		key = page;
-		page = document.title;
-	}
-	if (!(page in state.pages)) {
-		state.pages[page] = {};
-	} else if (typeof key === "string") {
-		if (value === undefined) {
-			state.pages[page][key] = true;
-		} else {
-			state.pages[page][key] = value;
-		}
-	}
+	if (value === undefined) value = true;
+	state.pages[window.location.pathname][key] = value;
 	save_state();
 };
 
-window.reset_state = (page) => {
-	if (page === undefined) {
-		state = initial_state;
-	}
-	else {
-		state.pages[page] = {};
-	}
+window.reset_state = _ => {
+	state = structuredClone(initial_state);
 	save_state();
 };
-

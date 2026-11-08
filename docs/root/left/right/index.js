@@ -31,8 +31,8 @@ const t_up_arrow    = g_touch(i_up_arrow    );
 const t_left_arrow  = g_touch(i_left_arrow  );
 const t_right_arrow = g_touch(i_right_arrow );
 
-const a       = [ 0                , 0                , 0                ];
-const b       = [ 0                , 1                , 0                ];
+const a       = [ 0        , 0        , 0        ];
+const b       = [ 0        , 1        , 0        ];
 
 const a_zeros = [ zero_a_0 , zero_a_1 , zero_a_2 ];
 const a_ones  = [ one_a_0  , one_a_1  , one_a_2  ];
@@ -42,8 +42,8 @@ const b_ones  = [ one_b_0  , one_b_1  , one_b_2  ];
 const t_zeros = [ t_zero_0 , t_zero_1 , t_zero_2 ];
 const t_ones  = [ t_one_0  , t_one_1  , t_one_2  ];
 
-t_left_arrow.starts(_ => { set_state(document.title, "left") });
-t_right_arrow.starts(_ => { set_state(document.title, "right") });
+t_left_arrow.starts(_ => { set_state("left") });
+t_right_arrow.starts(_ => { set_state("right") });
 
 t_up_arrow.starts(g_go_up);
 t_left_arrow.starts(g_go_left);
@@ -107,8 +107,6 @@ t_one_0 .starts(_ => { a[0] = 0; }, update);
 t_one_1 .starts(_ => { a[1] = 0; }, update);
 t_one_2 .starts(_ => { a[2] = 0; }, update);
 
-window.addEventListener('load', e => {
-    get_state(document.title);
-    base.start();
-    update();
-});
+set_state();
+base.start();
+update();

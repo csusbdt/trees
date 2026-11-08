@@ -1,9 +1,6 @@
 import '../../canvasapp.js';
 
 const base   = g_frame(i_base);
-// const border = g_frame(i_border);
-// const lines  = g_frame(i_lines );
-// const arrows = g_frame(i_arrows);
 const player = g_frame(i_player);
 const small  = g_frame(i_small, 1/8,   0, 200);
 const big    = g_frame(i_big  , 1/8, 200, 400);
@@ -124,7 +121,7 @@ t02.starts(_ => {
         player.start();
     } else {
         player.stop();
-        set_state("root/right", "right", true);
+        set_state("right");
         going_right.start();
     }
     start_touches();
@@ -179,10 +176,10 @@ t12.starts(_ => {
 
 const start_touches = _ => {
     go_up.start();
-    if (get_state(document.title, "left")) {
+    if (get_state("left")) {
         go_left.start();
     }
-    if (get_state(document.title, "right")) {
+    if (get_state("right")) {
         go_right.start();
     }
     if (player.x === 0 && player.y === 0) {
@@ -222,20 +219,15 @@ going_left.starts(reset, player, left, go_left, start_touches);
 going_right.starts(right_opening);
 right_opening.starts(reset, player, right_opened, start_touches);
 
-window.addEventListener('load', e => {
-    base.start();
-    // lines.start();
-    // border.start();
-    // arrows.start();
-    player.start();
-    small.start();
-    big.start();
-    up.start();
-    if (get_state(document.title, "left")) {
-        left.start();
-    }
-    if (get_state(document.title, "right")) {
-        right_opened.start();
-    }
-    start_touches();
-});
+base.start();
+player.start();
+small.start();
+big.start();
+up.start();
+if (get_state("left")) {
+    left.start();
+}
+if (get_state("right")) {
+    right_opened.start();
+}
+start_touches();

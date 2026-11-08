@@ -79,10 +79,10 @@ const start_touches = _ => {
         reset.start(); 
         t_reset.start(); 
     } else {
-        if (get_state(document.title, "up"    )) go_up    .start();
-        if (get_state(document.title, "left"  )) go_left  .start();
-        if (get_state(document.title, "right" )) go_right .start();
-        if (get_state(document.title, "noop"  )) t_noop   .start();
+        if (get_state("up"    )) go_up    .start();
+        if (get_state("left"  )) go_left  .start();
+        if (get_state("right" )) go_right .start();
+        if (get_state("noop"  )) t_noop   .start();
     }
 };
 
@@ -100,7 +100,7 @@ t_red[2].starts(_ => {
     red[2].stop();
     if (h3()) red[3].start(); else red[4].start();
     if (red[3].started() && red[4].started()) {
-        set_state(document.title, "right");
+        set_state("right");
         right.start();
     }
     start_touches();
@@ -125,7 +125,7 @@ t_blue[2].starts(_ => {
     blue[2].stop();
     if (h1()) blue[1].start(); else blue[0].start();
     if (blue[0].started() && blue[1].started()) {
-        set_state(document.title, "left");
+        set_state("left");
         left.start();
     }
     start_touches();
@@ -150,7 +150,7 @@ t_cyan[2].starts(_ => {
     cyan[2].stop();
     if (v3()) cyan[3].start(); else cyan[4].start();
     if (cyan[3].started() && cyan[4].started()) {
-       set_state(document.title, "noop");
+       set_state("noop");
        noop.start();
     }
     start_touches();
@@ -175,7 +175,7 @@ t_green[2].starts(_ => {
     green[2].stop();
     if (v1()) green[1].start(); else green[0].start();
     if (green[0].started() && green[1].started()) {
-        set_state(document.title, "up");
+        set_state("up");
         up.start();
     }
     start_touches();
@@ -207,8 +207,8 @@ cyan  [2].stop  ();
 cyan  [3].stop  ();
 cyan  [4].stop  ();
 
-if (get_state(document.title, "up"   )) up.start();
-if (get_state(document.title, "left" )) left.start();
-if (get_state(document.title, "right")) right.start();
-if (get_state(document.title, "noop" )) noop.start();
+if (get_state("up"   )) up.start();
+if (get_state("left" )) left.start();
+if (get_state("right")) right.start();
+if (get_state("noop" )) noop.start();
 start_touches();
