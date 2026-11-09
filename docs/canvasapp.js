@@ -1,8 +1,6 @@
 import './state.js';
 import './sfx.js';
 
-// Ctrl + Alt + [
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 // vars
@@ -29,6 +27,18 @@ window.g_play_fail      = g_play_thud;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+// The following string ends with a slash.
+const app_root  = window.location.pathname.slice(0, window.location.pathname.indexOf('root'));
+// The following string starts with a slash.
+const page_path = window.location.pathname.slice(window.location.pathname.indexOf('/root'));
+
+const favicon = document.createElement('link');
+favicon.rel = 'icon';
+document.head.appendChild(favicon);
+favicon.href = app_root + 'favicon.ico';
+
+document.title = page_path;
+
 window.assert = (condition, message) => {
 	if (!condition) {
 		throw new Error(message || "Assertion failed");
@@ -39,7 +49,6 @@ window.g_log = function(...args) {
 	args.forEach(arg => console.log(arg));
 };
 
-//window.g_path = window.location.pathname.slice(window.location.pathname.indexOf('/root'));
 
 // window.g_url = path => {
 // 	if (window.location.pathname.startsWith('/trees')) {
