@@ -12,6 +12,7 @@ const play_opened   = g_frame(i_play_music_2);
 const pause_opened  = g_frame(i_pause_music_2);
 const gun           = g_frame(i_gun_0);
 
+const wait_opened   = g_loop(g_frames([ i_wait_music_2_0, i_wait_music_2_1, i_wait_music_2_2, i_wait_music_2_3 ]));
 const ship          = g_loop(g_frames([ i_ship_0, i_ship_1, i_ship_2, i_ship_1 ], ship_dur));
 
 const up_closing    = g_once(g_frames([i_up_1, i_up_0, i_blank]));
@@ -20,7 +21,8 @@ const right_closing = g_once(g_frames([i_right_1, i_right_0, i_blank]));
 const play_closing  = g_once(g_frames([i_play_music_1, i_play_music_0, i_blank]));
 const pause_closing = g_once(g_frames([i_pause_music_1, i_pause_music_0, i_blank]));
 const play_opening  = g_once(g_frames([i_play_music_0, i_play_music_1]));
-const pause_opening = g_once(g_frames([i_pause_music_0, i_pause_music_1]));
+//const pause_opening = g_once(g_frames([i_pause_music_0, i_pause_music_1]));
+const wait_opening  = g_once(g_frames([i_wait_music_0, i_wait_music_1]));
 const gun_firing    = g_once(g_frames(i_gun_1), blob_dur);
 const blob_0        = g_once(g_frames([ i_blob_0_0, i_blob_0_1, i_blob_0_2, i_blob_0_3, i_blob_0_3 ], ship_dur));
 const blob_1        = g_once(g_frames([ i_blob_1_0, i_blob_1_1, i_blob_1_2, i_blob_1_3, i_blob_1_4, i_blob_1_5 ], ship_dur));
@@ -43,12 +45,9 @@ const on_end_music = e => {
 };
 
 const on_playing_music = e => {
-    g_log("playing music");
-	// clear_touchables();
- //    set_state("played");
- //    pause_opened.stop();
- //    pause_closing.start();
- //    played.start();
+    wait_opened.stop();
+    pause_opened.start();
+    start_touchables();
 };
 
 const music = g_music("say_it_isnt_so.mp3", on_end_music, on_playing_music);
@@ -67,14 +66,14 @@ right_closing.starts(g_go_right);
 
 pause_closing.stops(music).starts(play_opening);
 
-play_closing.starts(pause_opening, music, _ => {
+play_closing.starts(wait_opening, _ => {
     set_state("left");
     left_opened.start();
-    start_touchables();
+    //start_touchables();
 });
 
 play_opening.starts(play_opened, start_touchables);
-pause_opening.starts(pause_opened, start_touchables);
+wait_opening.starts(music, wait_opened);
 
 gun_firing.stops(ship);
 
@@ -136,4 +135,3 @@ if (get_state("right")) {
     go_right.start();
 }
 start_touchables();
-
