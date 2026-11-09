@@ -56,7 +56,11 @@ const start_touchables = _ => {
     go_up.start();
     if (get_state("left")) go_left.start();
     if (get_state("right")) go_right.start();
-    if (g_is_music_started) pause_music.start(); else play_music.start();
+    if (g_is_music_started) {
+        if (pause_opened.started()) pause_music.start(); 
+    } else {
+        play_music.start();
+    }
     fire_gun.start();
 };
 
