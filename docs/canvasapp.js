@@ -21,6 +21,10 @@ window.dirty            = true;
 window.g_play_success   = g_play_bop;
 window.g_play_fail      = g_play_thud;
 
+// to eliminate flash of black
+ctx.fillStyle = '#FAF9F6';
+ctx.fillRect(0, 0, g_canvas.width, g_canvas.height);
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // helpers
