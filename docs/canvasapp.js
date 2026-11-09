@@ -27,17 +27,21 @@ window.g_play_fail      = g_play_thud;
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-// The following string ends with a slash.
 const app_root  = window.location.pathname.slice(0, window.location.pathname.indexOf('root'));
-// The following string starts with a slash.
 const page_path = window.location.pathname.slice(window.location.pathname.indexOf('/root'));
+
+document.title = page_path;
 
 const favicon = document.createElement('link');
 favicon.rel = 'icon';
 document.head.appendChild(favicon);
 favicon.href = app_root + 'favicon.ico';
 
-document.title = page_path;
+const stylesheet = document.createElement('stylesheet');
+stylesheet.rel = 'stylesheet';
+stylesheet.type = 'text/css';
+stylesheet.href = app_root + 'styles.css';
+document.head.appendChild(stylesheet);
 
 window.assert = (condition, message) => {
 	if (!condition) {
