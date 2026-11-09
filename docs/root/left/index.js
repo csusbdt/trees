@@ -42,13 +42,22 @@ const on_end_music = e => {
     played.start();
 };
 
-const music = g_music("say_it_isnt_so.mp3", on_end_music, 1);
+const on_playing_music = e => {
+    g_log("playing music");
+	// clear_touchables();
+ //    set_state("played");
+ //    pause_opened.stop();
+ //    pause_closing.start();
+ //    played.start();
+};
+
+const music = g_music("say_it_isnt_so.mp3", on_end_music, on_playing_music);
 
 const start_touchables = _ => {
     go_up.start();
     if (get_state("left")) go_left.start();
     if (get_state("right")) go_right.start();
-    if (g_is_music_playing) pause_music.start(); else play_music.start();
+    if (g_is_music_started) pause_music.start(); else play_music.start();
     fire_gun.start();
 };
 
