@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>root/right/left/left/right</title>
-    <link rel="stylesheet" href="../../../../../../styles.css">
+    <link rel="stylesheet" href="../../../../../styles.css"                      >
+    <link rel="icon"       href="../../../../../favicon.ico" type="image/x-icon" >
 </head>
 <body>
     <canvas id="g_canvas" width="1920" height="1080">
 
-    <img id="i_blank"     src="../../../../../../images/blank.png"       />
-    <img id="i_right_0"   src="../../../../../../images/stub/right_0.png" />
-    <img id="i_right_1"   src="../../../../../../images/stub/right_1.png" />
-    <img id="i_right_2"   src="../../../../../../images/stub/right_2.png" />
-    <img id="i_right_3"   src="../../../../../../images/stub/right_3.png" />
+    <img id="i_blank"     src="../../../../../images/blank.png"       />
+    <img id="i_right_0"   src="../../../../../images/stub/right_0.png" />
+    <img id="i_right_1"   src="../../../../../images/stub/right_1.png" />
+    <img id="i_right_2"   src="../../../../../images/stub/right_2.png" />
+    <img id="i_right_3"   src="../../../../../images/stub/right_3.png" />
     
     <script type="module">
-        import '../../../../../../canvasapp.js';
+        import '../../../../../canvasapp.js';
         const right_closing = g_once(g_frames([ i_right_2, i_right_1, i_right_0 ])).starts(g_go_up);
         const right         = g_frame(i_right_3)                                    .start();
         const t_right       = g_touch(i_right_3).stops(right).starts(right_closing) .start();
